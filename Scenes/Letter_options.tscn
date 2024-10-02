@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://cndsk7l3v3503"]
+
+[ext_resource type="Script" path="res://Scripts/letter_options.gd" id="1_fwonr"]
+
+[node name="Letter_options" type="ItemList"]
+offset_right = 79.0
+offset_bottom = 146.0
+select_mode = 1
+item_count = 5
+item_0/text = "abc"
+item_1/text = "ABC"
+item_2/text = "123"
+item_3/text = "</>"
+item_4/text = "Reset"
+script = ExtResource("1_fwonr")
+
+[connection signal="multi_selected" from="." to="." method="_on_multi_selected"]
