@@ -2,7 +2,7 @@ extends Label
 
 var character_frequency: Dictionary
 
-
+# initializes the text display
 func _ready():
 	visible = true
 
