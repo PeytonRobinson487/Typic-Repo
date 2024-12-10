@@ -7,12 +7,15 @@ var items: Array = [true, true, true, true, false]
 const GREEN: Color = Color(0, 0.25, 0.1)
 const RED: Color = Color(0.25, 0, 0.1)
 
+
+# constructor
 func _ready():
 	for i in items.size() - 1:
 		self.set_item_custom_bg_color(i, GREEN)
 	self.set_item_custom_bg_color(4, RED)
 
 
+# when the buttons are pressed
 func _on_multi_selected(index, selected):
 	# check that not all buttons are false
 	if get_buttons_false() == 3 && items[index] == true:
@@ -31,10 +34,12 @@ func _on_multi_selected(index, selected):
 		computer_text.reset_text()
 
 
+# returns the button state: true or false
 func get_item_value(item_index: int) -> bool:
 	return items[item_index]
 
 
+# gets the number of false buttons
 func get_buttons_false() -> int:
 	var buttons_false: int = 0
 	for button in items.size():

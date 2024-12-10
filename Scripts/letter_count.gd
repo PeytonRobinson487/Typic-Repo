@@ -5,6 +5,7 @@ var correct_letter_count: int
 var wrong_letter_count: int
 
 
+# public constructor
 func initialize_counts(text_parameter: String = "", total_count_parameter: int = 0, correct_count_parameter: int = 0, wrong_count_parameter: int = 0):
 	self.text = text_parameter
 	total_letter_count = total_count_parameter
@@ -12,6 +13,7 @@ func initialize_counts(text_parameter: String = "", total_count_parameter: int =
 	wrong_letter_count = wrong_count_parameter
 
 
+# adds the count to one of the following types of counts: total, correct, and wrong
 func add_count(count_type: String, amount: int):
 	if count_type == "total":
 		total_letter_count += amount
@@ -23,6 +25,7 @@ func add_count(count_type: String, amount: int):
 		print("Error. Did not enter correct count_type. Please enter:\n\"total\"\n\"correct\"\n\"wrong\"")
 
 
+# displays the letter counts at the bottom of the screen
 func display_letter_counts():
 	self.text = str(total_letter_count) + ": Total\n"
 	self.text += str(correct_letter_count) + ": Correct\n"

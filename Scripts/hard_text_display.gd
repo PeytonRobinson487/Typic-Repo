@@ -2,6 +2,7 @@ extends Label
 
 var character_frequency: Dictionary
 
+
 # initializes the text display
 func _ready():
 	visible = true
@@ -17,24 +18,29 @@ func sort_dict(dict: Dictionary) -> Dictionary:
 	return dict
 
 
+# add's a new hard letter
 func add_key(_key: String, _value: int):
 	character_frequency[_key] = _value
 
 
+# increments the wrong count for the hard letter
 func increment_key_value(_key: String, new_value: int):
 	character_frequency[_key] += new_value
 
 
-func divide_key_value(_key: String, denominator: int):
-	character_frequency[_key] /= denominator
+# decreasees the key value
+func decrease_key_value(_key: String, denominator: int):
+	character_frequency[_key] -= 1
 
 
+# checks if a string has a character
 func has_character(user_text: String):
 	if character_frequency.has(user_text):
 		return true
 	return false
 
 
+# displays the hard characters
 func display_hard_char():
 	self.text = ""
 	

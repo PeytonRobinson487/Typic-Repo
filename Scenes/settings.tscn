@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmxkxr02htfvl"]
+
+[ext_resource type="Script" path="res://Scenes/settings.gd" id="1_kup3q"]
+
+[node name="Settings" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+format = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Input Handler" type="Node" parent="."]
+script = ExtResource("1_kup3q")
