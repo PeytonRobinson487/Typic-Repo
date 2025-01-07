@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://jd7cry720lt"]
-
-[ext_resource type="Script" path="res://Scripts/Input Handler.gd" id="1_826g7"]
-
-[node name="Input Handler" type="Node"]
-script = ExtResource("1_826g7")

@@ -4,7 +4,7 @@
 script/source = "extends LineEdit
 
 @onready var animation_player = $AnimationPlayer
-@onready var letter_options = %Letter_Options
+@onready var letter_options: ItemList = $\"Input Handler/Letter_options\"
 
 
 # text containers for choosing random characte
@@ -46,6 +46,7 @@ var char_end_index: int
 
 
 func _ready():
+	letter_options.init()
 	char_begin_index = 0
 	char_end_index = TEXT_CONTAINER.size() - 1
 	self.generate_character(10, {})
