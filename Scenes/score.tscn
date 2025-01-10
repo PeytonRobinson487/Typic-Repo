@@ -3156,3 +3156,12 @@ layer_0/tile_data = PackedInt32Array(0, 0, 1610612736, 65536, 0, 1610612736, 131
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(574, 324)
+
+[node name="Button" type="Button" parent="."]
+offset_left = 1066.0
+offset_top = 22.0
+offset_right = 1119.0
+offset_bottom = 53.0
+text = "Menu"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

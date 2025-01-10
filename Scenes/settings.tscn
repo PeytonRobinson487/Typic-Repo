@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cka8ktym7dsif"]
+[gd_scene load_steps=6 format=3 uid="uid://cka8ktym7dsif"]
 
-[ext_resource type="Script" path="res://Scenes/settings.gd" id="1_mpqgs"]
+[ext_resource type="Script" path="res://Scripts/settings.gd" id="1_mpqgs"]
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_tloef"]
+[ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="3_car1x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mfbhy"]
 texture = ExtResource("1_tloef")
@@ -3166,87 +3167,58 @@ offset_right = 1132.0
 offset_bottom = 48.0
 text = "Menu"
 
-[node name="score" type="MenuButton" parent="Node"]
-offset_left = 48.0
-offset_top = 78.0
-offset_right = 283.0
-offset_bottom = 109.0
-button_pressed = true
-text = "Score"
+[node name="Score Display" type="ItemList" parent="Node"]
+offset_left = 91.0
+offset_top = 105.0
+offset_right = 338.0
+offset_bottom = 248.0
+select_mode = 1
+auto_height = true
 item_count = 5
-popup/item_0/text = "Total Score"
-popup/item_0/checkable = 1
-popup/item_1/text = "Current Score"
-popup/item_1/checkable = 1
-popup/item_1/id = 1
-popup/item_2/text = "Correct Characters"
-popup/item_2/checkable = 1
-popup/item_2/id = 2
-popup/item_3/text = "Missed Characters"
-popup/item_3/checkable = 1
-popup/item_3/id = 3
-popup/item_4/text = "Hard Characters"
-popup/item_4/checkable = 1
-popup/item_4/id = 4
+item_0/text = "Current Score"
+item_1/text = "Missed Characters"
+item_2/text = "Correct Characters"
+item_3/text = "Hard Characrters"
+item_4/text = "Accuracy"
 
-[node name="Text Info" type="MenuButton" parent="Node"]
-offset_left = 395.0
-offset_top = 80.0
-offset_right = 630.0
-offset_bottom = 111.0
-button_pressed = true
-keep_pressed_outside = true
-text = "Difficulty"
-flat = false
+[node name="Difficulty" type="ItemList" parent="Node"]
+offset_left = 618.0
+offset_top = 141.0
+offset_right = 795.0
+offset_bottom = 257.0
+auto_height = true
 item_count = 4
-popup/item_0/text = "Easy"
-popup/item_0/checkable = 2
-popup/item_1/text = "Medium"
-popup/item_1/checkable = 2
-popup/item_1/id = 1
-popup/item_2/text = "Hard"
-popup/item_2/checkable = 2
-popup/item_2/id = 2
-popup/item_3/text = "Pro"
-popup/item_3/checkable = 2
-popup/item_3/id = 3
+item_0/text = "Easy"
+item_1/text = "Medium"
+item_2/text = "Hard"
+item_3/text = "Pro"
 
-[node name="Sound" type="MenuButton" parent="Node"]
-offset_left = 49.0
-offset_top = 361.0
-offset_right = 284.0
-offset_bottom = 392.0
-button_pressed = true
-keep_pressed_outside = true
-text = "Sound"
-flat = false
+[node name="Text" type="ItemList" parent="Node"]
+offset_left = 604.0
+offset_top = 406.0
+offset_right = 852.0
+offset_bottom = 522.0
+auto_height = true
+item_count = 4
+item_0/text = "Lowercase Characters"
+item_1/text = "Uppercase Characters"
+item_2/text = "Numbers"
+item_3/text = "Symbols"
+
+[node name="Sound" type="ItemList" parent="Node"]
+offset_left = 84.0
+offset_top = 468.0
+offset_right = 392.0
+offset_bottom = 530.0
+auto_height = true
 item_count = 2
-popup/item_0/text = "Music"
-popup/item_0/checkable = 1
-popup/item_1/text = "Sound Effects"
-popup/item_1/checkable = 1
-popup/item_1/id = 1
+item_0/text = "Music"
+item_1/text = "Sound Effects"
 
-[node name="Text" type="MenuButton" parent="Node"]
-offset_left = 396.0
-offset_top = 366.0
-offset_right = 631.0
-offset_bottom = 397.0
-button_pressed = true
-keep_pressed_outside = true
-text = "Text"
-flat = false
-item_count = 4
-popup/item_0/text = "Lowercase letters"
-popup/item_0/checkable = 1
-popup/item_1/text = "Uppercase letters"
-popup/item_1/checkable = 1
-popup/item_1/id = 1
-popup/item_2/text = "Numbers"
-popup/item_2/checkable = 1
-popup/item_2/id = 2
-popup/item_3/text = "Symbols"
-popup/item_3/checkable = 1
-popup/item_3/id = 3
+[node name="Data" parent="." instance=ExtResource("3_car1x")]
 
 [connection signal="pressed" from="Node/menu_button" to="." method="_on_menu_button_pressed"]
+[connection signal="multi_selected" from="Node/Score Display" to="." method="_on_score_display_multi_selected"]
+[connection signal="item_selected" from="Node/Difficulty" to="." method="_on_difficulty_item_selected"]
+[connection signal="item_selected" from="Node/Text" to="." method="_on_text_item_selected"]
+[connection signal="item_selected" from="Node/Sound" to="." method="_on_sound_item_selected"]
