@@ -7,8 +7,9 @@ var total_score: int = 0
 var total_wrong: int = 0
 var total_correct: int = 0
 var average_accuracy: float = 100.0
-var level: int = -1
+var player_level: int = 1
 var hardest_characters: String = ""
+var longest_streak: int = 0
 
 ## Settings Data
 # Difficulty
@@ -33,8 +34,6 @@ var text_modifiers: Array = [
 ]
 
 # Sound
-var music_on: bool = true
-var sound_effects_on: bool = true
 # 0 - music_on
 # 1 - sound_effects_on
 var sound_modifiers: Array = [

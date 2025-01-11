@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr0w3l4tv0w04"]
+[gd_scene load_steps=9 format=3 uid="uid://cr0w3l4tv0w04"]
 
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_1186q"]
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_ech1o"]
+[ext_resource type="PackedScene" uid="uid://61ft10y0nqei" path="res://Scenes/text_maker.tscn" id="3_dy8h3"]
+[ext_resource type="PackedScene" uid="uid://dgwcd80cthckh" path="res://Scenes/player_handler.tscn" id="4_lktuf"]
+[ext_resource type="Script" path="res://Scripts/player_handler.gd" id="5_mxu1c"]
+[ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="6_8tk0y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vd7kh"]
 texture = ExtResource("1_1186q")
@@ -3159,13 +3163,17 @@ position = Vector2(574, 324)
 
 [node name="Text" type="Node" parent="."]
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Text"]
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="user_input" type="LineEdit" parent="Text"]
-offset_right = 67.0625
-offset_bottom = 31.0
+offset_left = 436.0
+offset_top = 401.0
+offset_right = 710.0
+offset_bottom = 432.0
+
+[node name="TextMaker" parent="Text" instance=ExtResource("3_dy8h3")]
+offset_left = 382.0
+offset_top = 206.0
+offset_right = 784.0
+offset_bottom = 261.0
 
 [node name="Displays" type="Node" parent="."]
 
@@ -3177,6 +3185,13 @@ offset_top = 16.0
 offset_right = 1113.0
 offset_bottom = 47.0
 text = "Menu"
+
+[node name="Scripts" type="Node" parent="."]
+
+[node name="PlayerHandler" parent="Scripts" instance=ExtResource("4_lktuf")]
+script = ExtResource("5_mxu1c")
+
+[node name="Data" parent="Scripts" instance=ExtResource("6_8tk0y")]
 
 [connection signal="text_changed" from="Text/user_input" to="." method="_on_user_input_text_changed"]
 [connection signal="pressed" from="Buttons/Button" to="." method="_on_button_pressed"]

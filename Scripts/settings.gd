@@ -28,7 +28,7 @@ extends Node2D
 @onready var score_display: ItemList = $"Node/Score Display"
 
 ## other variables
-@onready var data: Node2D = $Data
+@onready var data = $Data
 
 
 ### FUNCTIONS --------------------------------------------------------------------------------------
@@ -49,6 +49,7 @@ func _on_score_display_multi_selected(index: int, selected: bool) -> void:
 # changes the text modifier array - description found in data.gd - using the clicked item index.
 func _on_text_item_clicked(index, at_position, mouse_button_index):
 	data.text_modifiers[index] = !data.text_modifiers[index]
+	print(data.text_modifiers)
 
 
 # difficulty

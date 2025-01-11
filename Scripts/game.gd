@@ -1,8 +1,8 @@
 extends Node2D
 
 
-@onready var rich_text_label = $Text/RichTextLabel
 @onready var user_input = $Text/user_input
+@onready var text_maker = $Text/TextMaker
 
 
 ## menu button
@@ -13,21 +13,25 @@ func _on_button_pressed() -> void:
 
 # checks computer displayed text with submitted player text
 func _on_user_input_text_changed(new_text: String) -> void:
-	var c_text: String = rich_text_label.text
+	var c_text: String = text_maker.text
 	
 	# check if it matches computer text (c_text)
 	if (c_text.substr(0, 1).similarity(new_text.substr(0, 1))):
-		c_text.erase(0, 1)
+		c_text = c_text.substr(1, c_text.length())
+		user_input.text = ""
 	
 	update_c_text(c_text)
 	pass
 
 
 func update_c_text(c_text: String) -> void:
+	text_maker.text = c_text
 	
-	rich_text_label.text = c_text
+	const C_TEXT_LENGTH: int = 20
+	if (c_text.length() < C_TEXT_LENGTH):
+		text_maker.text += text_maker.generate_text(C_TEXT_LENGTH)
 
 
-# initialization - reusable unlike "_ready()"
-func _enter_tree() -> void:
-	pass
+# initialization
+func _ready() -> void:
+	update_c_text("")
