@@ -3175,7 +3175,6 @@ offset_top = 317.0
 offset_right = 282.0
 offset_bottom = 433.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-allow_rmb_select = true
 allow_search = false
 auto_height = true
 item_count = 4
@@ -3206,4 +3205,3 @@ metadata/_edit_use_anchors_ = true
 
 [connection signal="text_changed" from="Buttons/user_input" to="." method="_on_user_input_text_changed"]
 [connection signal="text_submitted" from="Buttons/user_input" to="." method="_on_user_input_text_submitted"]
-[connection signal="item_clicked" from="Buttons/page list" to="." method="_on_page_list_item_clicked"]
