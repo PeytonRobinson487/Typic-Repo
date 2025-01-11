@@ -3157,11 +3157,26 @@ layer_0/tile_data = PackedInt32Array(0, 0, 1610612736, 65536, 0, 1610612736, 131
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(574, 324)
 
-[node name="Button" type="Button" parent="."]
+[node name="Text" type="Node" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Text"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="user_input" type="LineEdit" parent="Text"]
+offset_right = 67.0625
+offset_bottom = 31.0
+
+[node name="Displays" type="Node" parent="."]
+
+[node name="Buttons" type="Node" parent="."]
+
+[node name="Button" type="Button" parent="Buttons"]
 offset_left = 1051.0
 offset_top = 16.0
 offset_right = 1113.0
 offset_bottom = 47.0
 text = "Menu"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="text_changed" from="Text/user_input" to="." method="_on_user_input_text_changed"]
+[connection signal="pressed" from="Buttons/Button" to="." method="_on_button_pressed"]

@@ -2,37 +2,52 @@ extends Node2D
 
 const _SAVE_FILE: String = ""
 
-## Score
-static var total_score: int
-static var total_wrong: int
-static var total_correct: int
-static var average_accuracy: float
-static var level: int
-static var hardest_characters: String
+## Score Data
+var total_score: int = 0
+var total_wrong: int = 0
+var total_correct: int = 0
+var average_accuracy: float = 100.0
+var level: int = -1
+var hardest_characters: String = ""
 
 ## Settings Data
-## Difficulty
+# Difficulty
 enum Difficulty {
-	EASY,
-	MEDIUM,
-	HARD,
-	PRO
+	EASY = 0,
+	MEDIUM = 1,
+	HARD = 2,
+	PRO = 3
 }
-static var difficulty: Difficulty = Difficulty.EASY
-## Allowed Characters
-static var lowercase_allowed: bool = true
-var uppercase_allowed: bool = true
-var numbers_allowed: bool = true
-var symbols_allowed: bool = true
-## Sound
+var difficulty: Difficulty = Difficulty.EASY
+
+# Allowed Characters
+# 0 - lowercase_allowed
+# 1 - uppercase_allowed
+# 2 - numbers_allowed
+# 3 - symbols_allowed
+var text_modifiers: Array = [
+	true,
+	true,
+	true,
+	true
+]
+
+# Sound
 var music_on: bool = true
 var sound_effects_on: bool = true
-## Display
-# 1 - total_score_displayed
-# 2 - current_score_displayed
-# 3 - missed_characters_displayed
-# 4 - correct_characters_displayed
-# 5 - hard_text_displayed
+# 0 - music_on
+# 1 - sound_effects_on
+var sound_modifiers: Array = [
+	true,
+	true
+]
+
+# Display
+# 0 - total_score_displayed
+# 1 - current_score_displayed
+# 2 - missed_characters_displayed
+# 3 - correct_characters_displayed
+# 4 - hard_text_displayed
 var display_scores: Array = [
 	false,
 	false,
@@ -41,7 +56,7 @@ var display_scores: Array = [
 	false
 ]
 
-
+## Functions
 func save_data_to_file():
 	# save data to the save file
 	pass

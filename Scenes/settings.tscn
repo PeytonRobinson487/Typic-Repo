@@ -3198,6 +3198,7 @@ offset_left = 604.0
 offset_top = 406.0
 offset_right = 852.0
 offset_bottom = 522.0
+select_mode = 1
 auto_height = true
 item_count = 4
 item_0/text = "Lowercase Characters"
@@ -3210,6 +3211,7 @@ offset_left = 84.0
 offset_top = 468.0
 offset_right = 392.0
 offset_bottom = 530.0
+select_mode = 1
 auto_height = true
 item_count = 2
 item_0/text = "Music"
@@ -3219,6 +3221,6 @@ item_1/text = "Sound Effects"
 
 [connection signal="pressed" from="Node/menu_button" to="." method="_on_menu_button_pressed"]
 [connection signal="multi_selected" from="Node/Score Display" to="." method="_on_score_display_multi_selected"]
-[connection signal="item_selected" from="Node/Difficulty" to="." method="_on_difficulty_item_selected"]
-[connection signal="item_selected" from="Node/Text" to="." method="_on_text_item_selected"]
-[connection signal="item_selected" from="Node/Sound" to="." method="_on_sound_item_selected"]
+[connection signal="item_clicked" from="Node/Difficulty" to="." method="_on_difficulty_item_clicked"]
+[connection signal="item_clicked" from="Node/Text" to="." method="_on_text_item_clicked"]
+[connection signal="item_clicked" from="Node/Sound" to="." method="_on_sound_item_clicked"]
