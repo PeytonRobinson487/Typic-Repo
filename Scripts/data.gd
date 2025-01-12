@@ -47,14 +47,14 @@ var sound_modifiers: Array = [
 # 2 - missed_characters_displayed
 # 3 - correct_characters_displayed
 # 4 - hard_text_displayed
-var display_scores: Array = [
-	false,
-	false,
-	false,
-	false,
-	false
+var score_modifiers: Array = [
+	true,
+	true,
+	true,
+	true,
+	true
 ]
-
+Color
 ## Functions
 func save_data_to_file():
 	# save data to the save file
