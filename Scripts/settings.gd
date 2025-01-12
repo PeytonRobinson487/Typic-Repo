@@ -41,7 +41,7 @@ const COLOR_OFF: Color = Color("MAROON")
 # initializer
 func _ready():
 	# read from file
-	
+	data.load_data()
 	
 	# initialize button colors
 	update_all_buttons()
@@ -50,6 +50,7 @@ func _ready():
 # menu button
 # brings the player back to the menu page
 func _on_menu_button_pressed() -> void:
+	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 
@@ -59,13 +60,11 @@ func _on_menu_button_pressed() -> void:
 func _on_score_display_multi_selected(index: int, selected: bool) -> void:
 	data.score_modifiers[index] = !data.score_modifiers[index]
 	update_button(index, data.score_modifiers, score_display)
-
 # text
 # changes the text modifier array - description found in data.gd - using the clicked item index.
 func _on_text_item_clicked(index, at_position, mouse_button_index):
 	data.text_modifiers[index] = !data.text_modifiers[index]
 	update_button(index, data.text_modifiers, text)
-
 # difficulty
 # changes the difficulty using the clicked item index.
 func _on_difficulty_item_clicked(index, at_position, mouse_button_index):
@@ -79,7 +78,6 @@ func _on_difficulty_item_clicked(index, at_position, mouse_button_index):
 		3:
 			data.difficulty = data.Difficulty.PRO
 	update_difficulty_button(index)
-
 # sound
 # changes the sound options array - description found in data.gd - using the cilcked item index
 func _on_sound_item_clicked(index, at_position, mouse_button_index):
@@ -89,14 +87,17 @@ func _on_sound_item_clicked(index, at_position, mouse_button_index):
 
 ## Button colors ---------------------------------------------------------------
 # updates either score, sound, or text modifier buttons
-func update_button(index: int, option_array: Array, item_list: ItemList) -> void:
+func update_button(index: int, option_array: Dictionary, item_list: ItemList) -> void:
 	# colors
-	var button_state: bool = option_array[index]
+	var button_state: bool = option_array.get(index)
 	if (button_state):
 		item_list.set_item_custom_fg_color(index, COLOR_ON)
 	else:
 		item_list.set_item_custom_fg_color(index, COLOR_OFF)
-
+	
+	# removes user focus
+	item_list.set_focus_mode(0)
+	item_list.deselect_all()
 # updates difficulty buttons
 func update_difficulty_button(index: int) -> void:
 	# colors
@@ -112,7 +113,10 @@ func update_difficulty_button(index: int) -> void:
 			difficulty.set_item_custom_fg_color(2, COLOR_ON)
 		data.Difficulty.PRO:
 			difficulty.set_item_custom_fg_color(3, COLOR_ON)
-
+	
+	# removes user focus
+	difficulty.set_focus_mode(0)
+	difficulty.deselect_all()
 # updates all buttons according to scene variable data: score, text, sound, difficulty
 func update_all_buttons():
 	for i in data.score_modifiers.size():

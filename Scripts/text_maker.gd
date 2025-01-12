@@ -1,7 +1,6 @@
 extends RichTextLabel
 
 
-@onready var data = $Data
 @onready var text_maker = $"."
 
 
@@ -31,23 +30,34 @@ var symbols: Dictionary = {
 	":": 19, ";": 20, "'": 21, '\"': 22, "<": 23, ">": 24, 
 	",": 25, ".": 26, "?": 27, "/": 28, "\\": 29
 }
+# holds the libraries - enables picking them by index
+var libraries: Array = [
+	lowercase_letters,
+	uppercase_letters,
+	numbers,
+	symbols
+]
 
-func generate_text(length: int) -> String:
+# generates text based on settings and hard characters
+func generate_text(length: int, data) -> String:
+	# only permit true values
+	var filtered_text_modifiers: Dictionary
+	for index in data.text_modifiers.size():
+		if (data.text_modifiers.get(index) == true):
+			filtered_text_modifiers[index] = true
+	
+	# generate characters
 	var new_text: String = ""
-	for i in length:
+	while (new_text.length() < length):
 		# 0 - lowercase_allowed
 		# 1 - uppercase_allowed
 		# 2 - numbers_allowed
 		# 3 - symbols_allowed
-		if (data.text_modifiers[0]):
-			new_text += lowercase_letters.find_key(randi() % lowercase_letters.size() + 1)
-		elif (data.text_modifiers[1]):
-			new_text += uppercase_letters.find_key(randi() % lowercase_letters.size() + 1)
-		elif (data.text_modifiers[2]):
-			new_text += numbers.find_key(randi() % lowercase_letters.size() + 1)
-		elif (data.text_modifiers[3]):
-			new_text += symbols.find_key(randi() % lowercase_letters.size() + 1)
-		else:
-			new_text = "a"
+		
+		# gets a garunteed true text modifier from the dictionary
+		var rand_index: int = filtered_text_modifiers.keys().pick_random()
+		var current_dictionary: Dictionary
+		current_dictionary.merge(libraries[rand_index], false)
+		new_text += current_dictionary.find_key(randi() % current_dictionary.size() + 1)
 	
 	return new_text

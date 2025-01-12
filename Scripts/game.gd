@@ -3,11 +3,19 @@ extends Node2D
 
 @onready var user_input = $Text/user_input
 @onready var text_maker = $Text/TextMaker
+@onready var data: Node2D = $Scripts/Data
+
+
+# initialization
+func _ready() -> void:
+	data.load_data()
+	update_c_text("")
 
 
 ## menu button
 # takes the player back to the home page
 func _on_button_pressed() -> void:
+	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 
@@ -29,9 +37,4 @@ func update_c_text(c_text: String) -> void:
 	
 	const C_TEXT_LENGTH: int = 20
 	if (c_text.length() < C_TEXT_LENGTH):
-		text_maker.text += text_maker.generate_text(C_TEXT_LENGTH)
-
-
-# initialization
-func _ready() -> void:
-	update_c_text("")
+		text_maker.text += text_maker.generate_text(C_TEXT_LENGTH, data)
