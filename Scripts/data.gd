@@ -9,10 +9,10 @@ var total_wrong: int = 0
 var total_correct: int = 0
 var average_accuracy: float = 100.0
 var player_level: int = 1
-var hardest_characters: String = ""
+# odds indexes: characters
+# even indexes: error weight
+var hard_characters: Array = [ "a", 1, "b", 0.6, "c", 0.5 ]
 var longest_streak: int = 0
-# < character: char > : < number_of_times_wrong: float >
-var hard_characters: Dictionary = {}
 
 ## Settings Data
 # Difficulty
@@ -68,8 +68,7 @@ func save_data():
 	file.store_var(total_correct)
 	file.store_var(average_accuracy)
 	file.store_var(player_level)
-	file.store_var(player_level)
-	file.store_var(hardest_characters)
+	file.store_var(hard_characters)
 	file.store_var(longest_streak)
 	file.store_var(difficulty)
 	file.store_var(text_modifiers)
@@ -85,8 +84,7 @@ func load_data():
 		total_correct = file.get_var()
 		average_accuracy = file.get_var()
 		player_level = file.get_var()
-		player_level = file.get_var()
-		hardest_characters = file.get_var()
+		hard_characters = file.get_var()
 		longest_streak = file.get_var()
 		difficulty = file.get_var()
 		text_modifiers = file.get_var()

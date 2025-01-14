@@ -87,9 +87,9 @@ func _on_sound_item_clicked(index, at_position, mouse_button_index):
 
 ## Button colors ---------------------------------------------------------------
 # updates either score, sound, or text modifier buttons
-func update_button(index: int, option_array: Dictionary, item_list: ItemList) -> void:
+func update_button(index: int, option_array: Array, item_list: ItemList) -> void:
 	# colors
-	var button_state: bool = option_array.get(index)
+	var button_state: bool = option_array[index]
 	if (button_state):
 		item_list.set_item_custom_fg_color(index, COLOR_ON)
 	else:

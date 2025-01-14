@@ -9,7 +9,7 @@ extends Node2D
 # initialization
 func _ready() -> void:
 	data.load_data()
-	text_maker.generate_text(40, data)
+	text_maker.text = text_maker.generate_text(25, data)
 	user_input.grab_focus()
 
 
@@ -30,6 +30,7 @@ func _on_user_input_text_changed(new_text: String) -> void:
 		c_text = c_text.substr(1, c_text.length())
 	else:
 		# incorrect input
+		
 		pass
 	user_input.text = ""
 	

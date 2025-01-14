@@ -60,10 +60,11 @@ func generate_text(length: int, data: Node2D) -> String:
 		# 3 - symbols_allowed
 		
 		# gets a garunteed true text modifier from the dictionary
-		if (randi() % 2 == 0):
+		if (randi() % 100 < 60):
 			new_text += get_normal_character(filtered_text_modifiers)
 		else:
 			new_text += get_hard_character(filtered_text_modifiers, data)
+		print(new_text)
 	return new_text
 
 # generates a random character from one of the character dictionaries
@@ -76,28 +77,17 @@ func get_hard_character(filtered_text_modifiers: Array, data: Node2D) -> String:
 	
 	# create sum prefix for chance_pool
 	var sum_prefix: Array
-	var sum: float
-	var i: int = 0;
+	var sum: float = 0.0
+	var i: int = 1;
 	while (i < data.hard_characters.size()):
-		sum += data.hard_characters.get(i)
+		sum += data.hard_characters[i]
 		sum_prefix.push_back(sum)
+		i += 2
 	
 	# compare random value and find which key to use
 	var rand: float = randf() * sum_prefix[sum_prefix.size() - 1]
 	i = 0
 	while (i < sum_prefix.size() && rand > sum_prefix[i]):
 		i += 1
-	
-	# retrive and return key by reverse-engineering sum_prefix
-	var key_value: float = sum_prefix[i] - sum_prefix[i - 1]
-	
-	## DEBUG
-	print("Sum prefix: " + var_to_str(sum_prefix))
-	print("data.hard_characters: " + var_to_str(data.hard_characters))
-	print("rand: " + var_to_str(rand))
-	print("i: " + var_to_str(i))
-	print("key_value: " + var_to_str(key_value))
-	print("value using key_value: " + var_to_str(data.hard_characters.find_key(key_value)))
-	## END DEBUG
 	 
-	return data.hard_characters.find_key(key_value)
+	return data.hard_characters[i * 2]

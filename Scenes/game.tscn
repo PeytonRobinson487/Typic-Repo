@@ -3177,7 +3177,10 @@ offset_top = 194.0
 offset_right = 864.0
 offset_bottom = 249.0
 theme_override_font_sizes/normal_font_size = 40
-text = "Hello"
+scroll_active = false
+autowrap_mode = 0
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
 
 [node name="Displays" type="Node" parent="."]
 
