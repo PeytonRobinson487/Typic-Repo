@@ -9,7 +9,8 @@ extends Node2D
 # initialization
 func _ready() -> void:
 	data.load_data()
-	update_c_text("")
+	text_maker.generate_text(40, data)
+	user_input.grab_focus()
 
 
 ## menu button
@@ -25,16 +26,26 @@ func _on_user_input_text_changed(new_text: String) -> void:
 	
 	# check if it matches computer text (c_text)
 	if (c_text.substr(0, 1).similarity(new_text.substr(0, 1))):
+		# correct input
 		c_text = c_text.substr(1, c_text.length())
-		user_input.text = ""
+	else:
+		# incorrect input
+		pass
+	user_input.text = ""
 	
 	update_c_text(c_text)
 	pass
 
 
+# updates TextMaker text
 func update_c_text(c_text: String) -> void:
 	text_maker.text = c_text
 	
 	const C_TEXT_LENGTH: int = 20
 	if (c_text.length() < C_TEXT_LENGTH):
 		text_maker.text += text_maker.generate_text(C_TEXT_LENGTH, data)
+
+
+# keeps user focus on
+func _on_user_input_focus_exited() -> void:
+	user_input.grab_focus()

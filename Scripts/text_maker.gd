@@ -1,3 +1,8 @@
+# We are currently working on generating the hard character
+# We need to figure out if the rand < sum_prefix[index] actually works right now
+# The idea works, but I think I implemented it wrong
+# It has deal with the while loop on line 88
+
 extends RichTextLabel
 
 
@@ -30,7 +35,7 @@ var symbols: Dictionary = {
 	":": 19, ";": 20, "'": 21, '\"': 22, "<": 23, ">": 24, 
 	",": 25, ".": 26, "?": 27, "/": 28, "\\": 29
 }
-# holds the libraries - enables picking them by index
+# holds the dictionaries - enables picking them by index
 var libraries: Array = [
 	lowercase_letters,
 	uppercase_letters,
@@ -39,13 +44,13 @@ var libraries: Array = [
 ]
 
 # generates text based on settings and hard characters
-func generate_text(length: int, data) -> String:
-	# only permit true values
-	var filtered_text_modifiers: Dictionary
+func generate_text(length: int, data: Node2D) -> String:
+	# add the indexes of the true values
+	var filtered_text_modifiers: Array
 	for index in data.text_modifiers.size():
-		if (data.text_modifiers.get(index) == true):
-			filtered_text_modifiers[index] = true
-	
+		if (data.text_modifiers[index]):
+			filtered_text_modifiers.push_back(index)
+			
 	# generate characters
 	var new_text: String = ""
 	while (new_text.length() < length):
@@ -55,9 +60,44 @@ func generate_text(length: int, data) -> String:
 		# 3 - symbols_allowed
 		
 		# gets a garunteed true text modifier from the dictionary
-		var rand_index: int = filtered_text_modifiers.keys().pick_random()
-		var current_dictionary: Dictionary
-		current_dictionary.merge(libraries[rand_index], false)
-		new_text += current_dictionary.find_key(randi() % current_dictionary.size() + 1)
-	
+		if (randi() % 2 == 0):
+			new_text += get_normal_character(filtered_text_modifiers)
+		else:
+			new_text += get_hard_character(filtered_text_modifiers, data)
 	return new_text
+
+# generates a random character from one of the character dictionaries
+func get_normal_character(filtered_text_modifiers: Array) -> String:
+	var rand_index: int = filtered_text_modifiers.pick_random()
+	return libraries[rand_index].find_key(randi() % libraries[rand_index].size() + 1)
+# uses hard text to get a weak character for the player
+func get_hard_character(filtered_text_modifiers: Array, data: Node2D) -> String:
+	if (data.hard_characters.size() == 0): return get_normal_character(filtered_text_modifiers);
+	
+	# create sum prefix for chance_pool
+	var sum_prefix: Array
+	var sum: float
+	var i: int = 0;
+	while (i < data.hard_characters.size()):
+		sum += data.hard_characters.get(i)
+		sum_prefix.push_back(sum)
+	
+	# compare random value and find which key to use
+	var rand: float = randf() * sum_prefix[sum_prefix.size() - 1]
+	i = 0
+	while (i < sum_prefix.size() && rand > sum_prefix[i]):
+		i += 1
+	
+	# retrive and return key by reverse-engineering sum_prefix
+	var key_value: float = sum_prefix[i] - sum_prefix[i - 1]
+	
+	## DEBUG
+	print("Sum prefix: " + var_to_str(sum_prefix))
+	print("data.hard_characters: " + var_to_str(data.hard_characters))
+	print("rand: " + var_to_str(rand))
+	print("i: " + var_to_str(i))
+	print("key_value: " + var_to_str(key_value))
+	print("value using key_value: " + var_to_str(data.hard_characters.find_key(key_value)))
+	## END DEBUG
+	 
+	return data.hard_characters.find_key(key_value)

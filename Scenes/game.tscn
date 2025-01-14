@@ -3164,16 +3164,20 @@ position = Vector2(574, 324)
 [node name="Text" type="Node" parent="."]
 
 [node name="user_input" type="LineEdit" parent="Text"]
-offset_left = 436.0
-offset_top = 401.0
-offset_right = 710.0
-offset_bottom = 432.0
+offset_left = 399.0
+offset_top = 1015.0
+offset_right = 717.0
+offset_bottom = 1126.0
+theme_override_font_sizes/font_size = 30
+placeholder_text = "User Input"
 
 [node name="TextMaker" parent="Text" instance=ExtResource("3_dy8h3")]
-offset_left = 382.0
-offset_top = 206.0
-offset_right = 784.0
-offset_bottom = 261.0
+offset_left = 285.0
+offset_top = 194.0
+offset_right = 864.0
+offset_bottom = 249.0
+theme_override_font_sizes/normal_font_size = 40
+text = "Hello"
 
 [node name="Displays" type="Node" parent="."]
 
@@ -3194,5 +3198,6 @@ script = ExtResource("5_mxu1c")
 [node name="Data" parent="Scripts" instance=ExtResource("6_8tk0y")]
 
 [connection signal="tree_exiting" from="." to="." method="_on_tree_exiting"]
+[connection signal="focus_exited" from="Text/user_input" to="." method="_on_user_input_focus_exited"]
 [connection signal="text_changed" from="Text/user_input" to="." method="_on_user_input_text_changed"]
 [connection signal="pressed" from="Buttons/Button" to="." method="_on_button_pressed"]

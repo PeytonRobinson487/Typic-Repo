@@ -11,6 +11,8 @@ var average_accuracy: float = 100.0
 var player_level: int = 1
 var hardest_characters: String = ""
 var longest_streak: int = 0
+# < character: char > : < number_of_times_wrong: float >
+var hard_characters: Dictionary = {}
 
 ## Settings Data
 # Difficulty
@@ -27,20 +29,20 @@ var difficulty: Difficulty = Difficulty.EASY
 # 1 - uppercase_allowed
 # 2 - numbers_allowed
 # 3 - symbols_allowed
-var text_modifiers: Dictionary = {
-	0 : true,
-	1 : true,
-	2 : true,
-	3 : true
-}
+var text_modifiers: Array = [
+	true,
+	true,
+	true,
+	true
+]
 
 # Sound
 # 0 - music_on
 # 1 - sound_effects_on
-var sound_modifiers: Dictionary = {
-	0 : true,
-	1 : true
-}
+var sound_modifiers: Array = [
+	true,
+	true
+]
 
 # Display
 # 0 - total_score_displayed
@@ -48,13 +50,13 @@ var sound_modifiers: Dictionary = {
 # 2 - missed_characters_displayed
 # 3 - correct_characters_displayed
 # 4 - hard_text_displayed
-var score_modifiers: Dictionary = {
-	0 : true,
-	1 : true,
-	2 : true,
-	3 : true,
-	4 : true
-}
+var score_modifiers: Array = [
+	true,
+	true,
+	true,
+	true,
+	true
+]
 
 
 ### saving and loading -----------------------------------------------------------------------------
