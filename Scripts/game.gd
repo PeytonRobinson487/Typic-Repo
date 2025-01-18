@@ -25,17 +25,42 @@ func _on_user_input_text_changed(new_text: String) -> void:
 	var c_text: String = text_maker.text
 	
 	# check if it matches computer text (c_text)
-	if (c_text.substr(0, 1).similarity(new_text.substr(0, 1))):
-		# correct input
-		c_text = c_text.substr(1, c_text.length())
+	var user_letter: String = new_text.substr(0, 1)
+	if (c_text.substr(0, 1).similarity(user_letter)):
+		c_text = correct_input(c_text, user_letter, data)
 	else:
-		# incorrect input
-		
-		pass
-	user_input.text = ""
+		wrong_input(user_letter, data)
 	
+	user_input.text = ""
 	update_c_text(c_text)
-	pass
+
+# scenario where the user inputs a correct character
+# returns updated computer text with first letter ommited
+func correct_input(computer_text: String, user_letter: String, data: Node2D) -> String:
+	# decrement hard character
+	if (data.hard_character.has(user_letter)):
+		data.hard_character[user_letter] -= 1.0
+		
+		# if below zero, remove hard character and decrement magnitude
+		if (data.hard_character.get(user_letter) < 0.0):
+			data.hard_character_magnitude -= data.hard_characters.get(user_letter)
+			data.hard_character.erase(user_letter)
+	
+	return computer_text.substr(1, computer_text.length())
+
+# scenario where the user inputs an incorrect character
+func wrong_input(user_letter: String, data: Node2D) -> void:
+	if (data.hard_character.has(user_letter)):
+		# update hard character
+		var character_value: float = data.hard_characters.get(user_letter)
+		var rand_1 = randf()
+		character_value += (character_value * 0.1) + rand_1
+		character_value = (character_value * 1.1) + rand_1
+		data.hard_characters[user_letter] = character_value
+	else:
+		# new hard character
+		data.hard_characters[user_letter] = 1.0
+		data.hard_character_magnitude += 1.0
 
 
 # updates TextMaker text

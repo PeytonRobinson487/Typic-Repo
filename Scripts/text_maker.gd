@@ -50,7 +50,7 @@ func generate_text(length: int, data: Node2D) -> String:
 	for index in data.text_modifiers.size():
 		if (data.text_modifiers[index]):
 			filtered_text_modifiers.push_back(index)
-			
+	
 	# generate characters
 	var new_text: String = ""
 	while (new_text.length() < length):
@@ -59,11 +59,10 @@ func generate_text(length: int, data: Node2D) -> String:
 		# 2 - numbers_allowed
 		# 3 - symbols_allowed
 		
-		# gets a garunteed true text modifier from the dictionary
-		if (randi() % 100 < 60):
+		if (randf() * 100.0 > data.hard_character_magnitude):
 			new_text += get_normal_character(filtered_text_modifiers)
-		else:
-			new_text += get_hard_character(filtered_text_modifiers, data)
+		elif (data.hard_characters.size() > 0):
+			new_text += get_hard_character(data)
 		print(new_text)
 	return new_text
 
@@ -72,9 +71,7 @@ func get_normal_character(filtered_text_modifiers: Array) -> String:
 	var rand_index: int = filtered_text_modifiers.pick_random()
 	return libraries[rand_index].find_key(randi() % libraries[rand_index].size() + 1)
 # uses hard text to get a weak character for the player
-func get_hard_character(filtered_text_modifiers: Array, data: Node2D) -> String:
-	if (data.hard_characters.size() == 0): return get_normal_character(filtered_text_modifiers);
-	
+func get_hard_character(data: Node2D) -> String:
 	# create sum prefix for chance_pool
 	var sum_prefix: Array
 	var sum: float = 0.0
