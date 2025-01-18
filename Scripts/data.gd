@@ -79,19 +79,31 @@ func save_data():
 
 # loads data from save file
 func load_data():
-	if (FileAccess.file_exists(_save_path) && FileAccess.get_file_as_string(_save_path).length() != 0):
-		var file = FileAccess.open(_save_path, FileAccess.READ)
-		total_score = file.get_var()
-		total_wrong = file.get_var()
-		total_correct = file.get_var()
-		average_accuracy = file.get_var()
-		player_level = file.get_var()
-		hard_characters = file.get_var()
-		hard_character_magnitude = file.get_var()
-		longest_streak = file.get_var()
-		difficulty = file.get_var()
-		text_modifiers = file.get_var()
-		sound_modifiers = file.get_var()
-		score_modifiers = file.get_var()
+	if (FileAccess.file_exists(_save_path) &&
+			FileAccess.get_file_as_string(_save_path).length() != 0):
+		
+		var file: FileAccess = FileAccess.open(_save_path, FileAccess.READ)
+		if !assign_variable(total_score, TYPE_INT, file): total_score = 0
+		if !assign_variable(total_wrong, TYPE_INT, file): total_wrong = 0
+		if !assign_variable(total_correct, TYPE_INT, file): total_correct = 0
+		if !assign_variable(average_accuracy, TYPE_FLOAT, file): average_accuracy = 0.0
+		if !assign_variable(player_level, TYPE_INT, file): player_level = 1
+		if !assign_variable(hard_characters, TYPE_DICTIONARY, file): hard_characters.clear()
+		if !assign_variable(hard_character_magnitude, TYPE_FLOAT, file): hard_character_magnitude = 0.0
+		if !assign_variable(longest_streak, TYPE_INT, file): longest_streak = 0
+		if !assign_variable(difficulty, TYPE_INT, file): difficulty = Difficulty.EASY
+		if !assign_variable(text_modifiers, TYPE_ARRAY, file): text_modifiers = [true, true, true, true]
+		if !assign_variable(sound_modifiers, TYPE_ARRAY, file): sound_modifiers = [true, true]
+		if !assign_variable(score_modifiers, TYPE_ARRAY, file): score_modifiers = [true, true, true, true, true]
 	else:
 		print("Save file does not exist on path \"" + _save_path +"\"")
+
+# asigns a variable with the file.get_var() and error handling
+func assign_variable(item, item_type, file: FileAccess) -> bool:
+	var new_item = file.get_var()
+	if (typeof(new_item) == item_type):
+		item = new_item
+	else:
+		print("Item type \"" + str(typeof(item)) + "\" does not match expected item type \"" + str(item_type) + "\". Variable reset.");
+		return false;
+	return true;
