@@ -54,15 +54,14 @@ func correct_input(computer_text: String, user_letter: String, data: Node2D) -> 
 func wrong_input(user_letter: String, data: Node2D) -> void:
 	if (data.hard_characters.has(user_letter)):
 		# update hard character
-		var character_value: float = data.hard_characters.get(user_letter)
-		var rand_1 = randf()
-		character_value += (character_value * 0.1) + rand_1
-		character_value = (character_value * 1.1) + rand_1
-		data.hard_characters[user_letter] = character_value
+		var character_value: float = data.get_char_magnitude(user_letter)
+		var rand_1 = randf() / 1.5
+		character_value = (character_value * 1.25) + rand_1
+		data.update_char_magnitude(user_letter, character_value);
 	else:
 		# new hard character
-		data.hard_characters[user_letter] = 1.0
-		data.hard_character_magnitude += 1.0
+		data.hard_characters.push_back(user_letter)
+		data.hard_characters.push_back(1.0)
 
 
 # updates TextMaker text

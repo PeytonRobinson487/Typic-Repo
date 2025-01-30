@@ -59,6 +59,28 @@ var score_modifiers: Array = [
 	true
 ]
 
+## Variable functions
+func update_char_magnitude(hard_char: String, magnitude: float) -> void:
+	# look for the index of the hard character
+	var i: int = 0
+	while (i < hard_characters.size() && hard_characters[i] != hard_char):
+		i += 1
+	
+	if (i == hard_characters.size()):
+		return
+	
+	# update the magnitude
+	hard_characters[i + 1] += magnitude
+
+func get_char_magnitude(hard_char: String) -> float:
+	var i: int = 0
+	while (i < hard_characters.size() && hard_characters[i] != hard_char):
+		i += 1
+	
+	if (i == hard_characters.size()):
+		return 0.0
+	
+	return hard_characters[i + 1]
 
 ### saving and loading -----------------------------------------------------------------------------
 # saves data to save file
