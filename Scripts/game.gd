@@ -31,9 +31,6 @@ func _on_user_input_text_changed(new_text: String) -> void:
 	else:
 		wrong_input(user_letter, data)
 	
-	print(data.hard_characters)
-	print(data.hard_character_magnitude)
-	
 	user_input.text = ""
 	update_c_text(c_text)
 

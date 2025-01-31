@@ -98,6 +98,7 @@ func update_button(index: int, option_array: Array, item_list: ItemList) -> void
 	# removes user focus
 	item_list.set_focus_mode(0)
 	item_list.deselect_all()
+
 # updates difficulty buttons
 func update_difficulty_button(index: int) -> void:
 	# colors
@@ -117,6 +118,7 @@ func update_difficulty_button(index: int) -> void:
 	# removes user focus
 	difficulty.set_focus_mode(0)
 	difficulty.deselect_all()
+
 # updates all buttons according to scene variable data: score, text, sound, difficulty
 func update_all_buttons():
 	for i in data.score_modifiers.size():

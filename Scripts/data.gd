@@ -111,6 +111,7 @@ func save_data() -> void:
 	file.store_var(hard_character_magnitude)
 	file.store_var(longest_streak)
 	file.store_var(difficulty)
+	print("Saving text_modifiers: " + str(text_modifiers))
 	file.store_var(text_modifiers)
 	file.store_var(sound_modifiers)
 	file.store_var(score_modifiers)
@@ -127,11 +128,15 @@ func load_data() -> void:
 		if !assign_variable(total_correct, TYPE_INT, file, 2): total_correct = 0
 		if !assign_variable(average_accuracy, TYPE_FLOAT, file, 3): average_accuracy = 0.0
 		if !assign_variable(player_level, TYPE_INT, file, 4): player_level = 1
+		print("load hard_characters before: " + str(hard_characters))
 		if !assign_variable(hard_characters, TYPE_ARRAY, file, 5): hard_characters.clear()
+		print("load hard_characters after: " + str(hard_characters))
 		if !assign_variable(hard_character_magnitude, TYPE_FLOAT, file, 6): hard_character_magnitude = 0.0
 		if !assign_variable(longest_streak, TYPE_INT, file, 7): longest_streak = 0
 		if !assign_variable(difficulty, TYPE_INT, file, 8): difficulty = Difficulty.EASY
+		print("load text_modifiers before: " + str(text_modifiers))
 		if !assign_variable(text_modifiers, TYPE_ARRAY, file, 9): text_modifiers = [true, true, true, true]
+		print("load text_modifiers after: " + str(text_modifiers))
 		if !assign_variable(sound_modifiers, TYPE_ARRAY, file, 10): sound_modifiers = [true, true]
 		if !assign_variable(score_modifiers, TYPE_ARRAY, file, 11): score_modifiers = [true, true, true, true, true]
 	else:
@@ -142,7 +147,7 @@ func load_data() -> void:
 func assign_variable(item, item_type, file: FileAccess, line: int) -> bool:
 	var new_item = file.get_var()
 	if (typeof(new_item) == item_type):
-		item = new_item
+		item[0] = new_item
 	else:
 		print("Item type \"" + str(typeof(item)) + "\" does not match expected item type \"" + str(item_type) + "\". Variable reset on item " + str(line) + ".");
 		return false;
