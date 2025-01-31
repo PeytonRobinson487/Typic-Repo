@@ -27,11 +27,12 @@ func _on_user_input_text_changed(new_text: String) -> void:
 	# check if it matches computer text (c_text)
 	var user_letter: String = new_text.substr(0, 1)
 	if (c_text.substr(0, 1).similarity(user_letter)):
-		print("Right")
 		c_text = correct_input(c_text, user_letter, data)
 	else:
-		print("Wrong")
 		wrong_input(user_letter, data)
+	
+	print(data.hard_characters)
+	print(data.hard_character_magnitude)
 	
 	user_input.text = ""
 	update_c_text(c_text)
@@ -41,12 +42,13 @@ func _on_user_input_text_changed(new_text: String) -> void:
 func correct_input(computer_text: String, user_letter: String, data: Node2D) -> String:
 	# decrement hard character
 	if (data.hard_characters.has(user_letter)):
-		data.hard_characters[user_letter] -= 1.0
+		data.update_hard_char_magnitude(user_letter, -1.0)
 		
 		# if below zero, remove hard character and decrement magnitude
-		if (data.hard_characters.get(user_letter) < 0.0):
-			data.hard_character_magnitude -= data.hard_characters.get(user_letter)
-			data.hard_characters.erase(user_letter)
+		if (data.get_hard_char_magnitude(user_letter) <= 0.0):
+			var char_index: int = data.return_hard_char_index(user_letter)
+			data.hard_characters.remove_at(char_index)
+			data.hard_characters.remove_at(char_index)
 	
 	return computer_text.substr(1, computer_text.length())
 
@@ -54,10 +56,9 @@ func correct_input(computer_text: String, user_letter: String, data: Node2D) -> 
 func wrong_input(user_letter: String, data: Node2D) -> void:
 	if (data.hard_characters.has(user_letter)):
 		# update hard character
-		var character_value: float = data.get_char_magnitude(user_letter)
-		var rand_1 = randf() / 1.5
-		character_value = (character_value * 1.25) + rand_1
-		data.update_char_magnitude(user_letter, character_value);
+		var character_value: float = data.get_hard_char_magnitude(user_letter)
+		var magnitude = 1 + randf() / 5
+		data.update_hard_char_magnitude(user_letter, magnitude);
 	else:
 		# new hard character
 		data.hard_characters.push_back(user_letter)

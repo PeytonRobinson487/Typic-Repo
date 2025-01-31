@@ -53,17 +53,26 @@ func generate_text(length: int, data: Node2D) -> String:
 	
 	# generate characters
 	var new_text: String = ""
-	while (new_text.length() < length):
+	var index: int = 0
+	while (new_text.length() < length && index < 100):
 		# 0 - lowercase_allowed
 		# 1 - uppercase_allowed
 		# 2 - numbers_allowed
 		# 3 - symbols_allowed
 		
-		if (randf() * 100.0 > data.hard_character_magnitude):
-			new_text += get_normal_character(filtered_text_modifiers)
-		elif (data.hard_characters.size() > 0):
-			new_text += get_hard_character(data)
+		var new_character: String = "a"
+		if (randf() * data.CHAR_MAGNITUDE_CAP < data.hard_character_magnitude):
+			new_character = get_hard_character(data)
+		else:
+			new_character = get_normal_character(filtered_text_modifiers)
+		
+		new_text += new_character
+		index += 1
 	
+	if (index == 100):
+		# prevents the program from crashing, and prints an error message to the textbox
+		print("text_maker while loop index: " + str(index))
+		return "S-8ySD,_Error_MSymf9"
 	return new_text
 
 # generates a random character from one of the character dictionaries
@@ -87,5 +96,6 @@ func get_hard_character(data: Node2D) -> String:
 	i = 0
 	while (i < sum_prefix.size() && rand > sum_prefix[i]):
 		i += 1
-	 
-	return data.hard_characters[i * 2]
+	
+	var new_char: String = data.hard_characters[i * 2]
+	return new_char

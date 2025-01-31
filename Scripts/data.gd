@@ -12,8 +12,10 @@ var player_level: int = 1
 # odds indexes: characters
 # even indexes: error weight
 var hard_characters: Array = []
-var hard_character_magnitude: int = 0
+var hard_character_magnitude: float = 0
 var longest_streak: int = 0
+
+const CHAR_MAGNITUDE_CAP: float = 20.0
 
 ## Settings Data
 # Difficulty
@@ -59,32 +61,46 @@ var score_modifiers: Array = [
 	true
 ]
 
-## Variable functions
-func update_char_magnitude(hard_char: String, magnitude: float) -> void:
+## Variable functions: hard_characters & hard_character_magnitude
+# updates the magnitude for a specific character
+func update_hard_char_magnitude(hard_char: String, magnitude: float) -> void:
 	# look for the index of the hard character
 	var i: int = 0
 	while (i < hard_characters.size() && hard_characters[i] != hard_char):
-		i += 1
+		i += 2
 	
 	if (i == hard_characters.size()):
 		return
 	
 	# update the magnitude
 	hard_characters[i + 1] += magnitude
+	hard_character_magnitude += magnitude
+	# if over the magnitude character cap, adjust magnitude and character magnitude
+	if (hard_characters[i + 1] > CHAR_MAGNITUDE_CAP):
+		hard_character_magnitude -= hard_characters[i + 1] - CHAR_MAGNITUDE_CAP
+		hard_characters[i + 1] = CHAR_MAGNITUDE_CAP
 
-func get_char_magnitude(hard_char: String) -> float:
+# returns the magnitude for a specific character
+func get_hard_char_magnitude(hard_char: String) -> float:
 	var i: int = 0
 	while (i < hard_characters.size() && hard_characters[i] != hard_char):
-		i += 1
+		i += 2
 	
 	if (i == hard_characters.size()):
 		return 0.0
 	
 	return hard_characters[i + 1]
 
+# returns the index of the character in hard_characters
+func return_hard_char_index(character: String) -> int:
+	var i: int = 0
+	while (i < hard_characters.size() && hard_characters[i] != character):
+		i += 2
+	return i
+
 ### saving and loading -----------------------------------------------------------------------------
 # saves data to save file
-func save_data():
+func save_data() -> void:
 	var file = FileAccess.open(_save_path, FileAccess.WRITE)
 	file.store_var(total_score)
 	file.store_var(total_wrong)
@@ -98,34 +114,51 @@ func save_data():
 	file.store_var(text_modifiers)
 	file.store_var(sound_modifiers)
 	file.store_var(score_modifiers)
+	print("Data saved!")
 
 # loads data from save file
-func load_data():
+func load_data() -> void:
 	if (FileAccess.file_exists(_save_path) &&
 			FileAccess.get_file_as_string(_save_path).length() != 0):
 		
 		var file: FileAccess = FileAccess.open(_save_path, FileAccess.READ)
-		if !assign_variable(total_score, TYPE_INT, file): total_score = 0
-		if !assign_variable(total_wrong, TYPE_INT, file): total_wrong = 0
-		if !assign_variable(total_correct, TYPE_INT, file): total_correct = 0
-		if !assign_variable(average_accuracy, TYPE_FLOAT, file): average_accuracy = 0.0
-		if !assign_variable(player_level, TYPE_INT, file): player_level = 1
-		if !assign_variable(hard_characters, TYPE_DICTIONARY, file): hard_characters.clear()
-		if !assign_variable(hard_character_magnitude, TYPE_FLOAT, file): hard_character_magnitude = 0.0
-		if !assign_variable(longest_streak, TYPE_INT, file): longest_streak = 0
-		if !assign_variable(difficulty, TYPE_INT, file): difficulty = Difficulty.EASY
-		if !assign_variable(text_modifiers, TYPE_ARRAY, file): text_modifiers = [true, true, true, true]
-		if !assign_variable(sound_modifiers, TYPE_ARRAY, file): sound_modifiers = [true, true]
-		if !assign_variable(score_modifiers, TYPE_ARRAY, file): score_modifiers = [true, true, true, true, true]
+		if !assign_variable(total_score, TYPE_INT, file, 0): total_score = 0
+		if !assign_variable(total_wrong, TYPE_INT, file, 1): total_wrong = 0
+		if !assign_variable(total_correct, TYPE_INT, file, 2): total_correct = 0
+		if !assign_variable(average_accuracy, TYPE_FLOAT, file, 3): average_accuracy = 0.0
+		if !assign_variable(player_level, TYPE_INT, file, 4): player_level = 1
+		if !assign_variable(hard_characters, TYPE_ARRAY, file, 5): hard_characters.clear()
+		if !assign_variable(hard_character_magnitude, TYPE_FLOAT, file, 6): hard_character_magnitude = 0.0
+		if !assign_variable(longest_streak, TYPE_INT, file, 7): longest_streak = 0
+		if !assign_variable(difficulty, TYPE_INT, file, 8): difficulty = Difficulty.EASY
+		if !assign_variable(text_modifiers, TYPE_ARRAY, file, 9): text_modifiers = [true, true, true, true]
+		if !assign_variable(sound_modifiers, TYPE_ARRAY, file, 10): sound_modifiers = [true, true]
+		if !assign_variable(score_modifiers, TYPE_ARRAY, file, 11): score_modifiers = [true, true, true, true, true]
 	else:
 		print("Save file does not exist on path \"" + _save_path +"\"")
+	print("Data loaded!")
 
 # asigns a variable with the file.get_var() and error handling
-func assign_variable(item, item_type, file: FileAccess) -> bool:
+func assign_variable(item, item_type, file: FileAccess, line: int) -> bool:
 	var new_item = file.get_var()
 	if (typeof(new_item) == item_type):
 		item = new_item
 	else:
-		print("Item type \"" + str(typeof(item)) + "\" does not match expected item type \"" + str(item_type) + "\". Variable reset.");
+		print("Item type \"" + str(typeof(item)) + "\" does not match expected item type \"" + str(item_type) + "\". Variable reset on item " + str(line) + ".");
 		return false;
 	return true;
+
+func print_all_data() -> void:
+	print("Total variables: " + str(12))
+	print("total_wrong: " + str(total_score))
+	print("total_wrong: " + str(total_wrong))
+	print("total_correct: " + str(total_correct))
+	print("average_accuracy: " + str(average_accuracy))
+	print("player_level: " + str(player_level))
+	print("hard_characters: " + str(hard_characters))
+	print("hard_character_magnitude: " + str(hard_character_magnitude))
+	print("longest_streak: " + str(longest_streak))
+	print("difficulty: " + str(difficulty))
+	print("text_modifiers: " + str(text_modifiers))
+	print("sound_modifiers: " + str(sound_modifiers))
+	print("score_modifiers: " + str(score_modifiers))
