@@ -117,41 +117,62 @@ func save_data() -> void:
 	file.store_var(score_modifiers)
 	print("Data saved!")
 
-# loads data from save file
+# loads data
 func load_data() -> void:
-	if (FileAccess.file_exists(_save_path) &&
-			FileAccess.get_file_as_string(_save_path).length() != 0):
-		
+	if FileAccess.file_exists(_save_path) and FileAccess.get_file_as_string(_save_path).length() != 0:
 		var file: FileAccess = FileAccess.open(_save_path, FileAccess.READ)
-		if !assign_variable(total_score, TYPE_INT, file, 0): total_score = 0
-		if !assign_variable(total_wrong, TYPE_INT, file, 1): total_wrong = 0
-		if !assign_variable(total_correct, TYPE_INT, file, 2): total_correct = 0
-		if !assign_variable(average_accuracy, TYPE_FLOAT, file, 3): average_accuracy = 0.0
-		if !assign_variable(player_level, TYPE_INT, file, 4): player_level = 1
-		print("load hard_characters before: " + str(hard_characters))
-		if !assign_variable(hard_characters, TYPE_ARRAY, file, 5): hard_characters.clear()
-		print("load hard_characters after: " + str(hard_characters))
-		if !assign_variable(hard_character_magnitude, TYPE_FLOAT, file, 6): hard_character_magnitude = 0.0
-		if !assign_variable(longest_streak, TYPE_INT, file, 7): longest_streak = 0
-		if !assign_variable(difficulty, TYPE_INT, file, 8): difficulty = Difficulty.EASY
-		print("load text_modifiers before: " + str(text_modifiers))
-		if !assign_variable(text_modifiers, TYPE_ARRAY, file, 9): text_modifiers = [true, true, true, true]
-		print("load text_modifiers after: " + str(text_modifiers))
-		if !assign_variable(sound_modifiers, TYPE_ARRAY, file, 10): sound_modifiers = [true, true]
-		if !assign_variable(score_modifiers, TYPE_ARRAY, file, 11): score_modifiers = [true, true, true, true, true]
+		
+		# Use a dictionary to map variable names to their references and types
+		var variables = {
+			"total_wrong": [total_wrong, TYPE_INT],
+			"total_correct": [total_correct, TYPE_INT],
+			"average_accuracy": [average_accuracy, TYPE_FLOAT],
+			"player_level": [player_level, TYPE_INT],
+			"hard_characters": [hard_characters, TYPE_ARRAY],
+			"hard_character_magnitude": [hard_character_magnitude, TYPE_FLOAT],
+			"longest_streak": [longest_streak, TYPE_INT],
+			"difficulty": [difficulty, TYPE_INT], # Assuming Difficulty is an enum
+			"text_modifiers": [text_modifiers, TYPE_ARRAY],
+			"sound_modifiers": [sound_modifiers, TYPE_ARRAY],
+			"score_modifiers": [score_modifiers, TYPE_ARRAY]
+		}
+		
+		for name in variables:
+			var variable_data = variables[name]
+			var variable = variable_data[0] # The actual variable itself
+			var type = variable_data[1] # The type of the variable
+			
+			if !assign_variable(variable, type, file): # No line number needed
+				# Reset to default value if loading fails
+				match type:
+					TYPE_INT: variable = 0
+					TYPE_FLOAT: variable = 0.0
+					TYPE_ARRAY: variable.clear()
+					# ... handle other types as needed ...
+					
+				print("Failed to load " + name + ". Resetting to default.")
+				
+		file.close() # Good practice to close the file
+		print("Data loaded!")
+		
 	else:
 		print("Save file does not exist on path \"" + _save_path +"\"")
 	print("Data loaded!")
 
-# asigns a variable with the file.get_var() and error handling
-func assign_variable(item, item_type, file: FileAccess, line: int) -> bool:
+
+# Assigns a variable from the file, with error handling
+func assign_variable(variable, item_type, file: FileAccess) -> bool:
 	var new_item = file.get_var()
-	if (typeof(new_item) == item_type):
-		item[0] = new_item
+	if typeof(new_item) == item_type:
+		# Directly assign to the variable now
+		if item_type == TYPE_ARRAY: #arrays are passed by reference
+			variable.clear()
+			variable.append_array(new_item)
+		else:
+			variable = new_item
+		return true
 	else:
-		print("Item type \"" + str(typeof(item)) + "\" does not match expected item type \"" + str(item_type) + "\". Variable reset on item " + str(line) + ".");
-		return false;
-	return true;
+		return false # Just return false on failure
 
 func print_all_data() -> void:
 	print("Total variables: " + str(12))
