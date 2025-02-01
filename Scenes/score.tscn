@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7sdx3ncibqyn"]
+[gd_scene load_steps=6 format=3 uid="uid://b7sdx3ncibqyn"]
 
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_524yi"]
 [ext_resource type="Script" path="res://Scripts/score.gd" id="1_544m1"]
+[ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="3_6rvnk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tk1he"]
 texture = ExtResource("1_524yi")
@@ -3157,11 +3158,21 @@ layer_0/tile_data = PackedInt32Array(0, 0, 1610612736, 65536, 0, 1610612736, 131
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(574, 324)
 
-[node name="Button" type="Button" parent="."]
+[node name="Menu_button" type="Button" parent="."]
 offset_left = 1066.0
 offset_top = 22.0
 offset_right = 1119.0
 offset_bottom = 53.0
 text = "Menu"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[node name="Clear_stats" type="Button" parent="."]
+offset_left = 37.0
+offset_top = 22.0
+offset_right = 131.0
+offset_bottom = 53.0
+text = "Reset Stats"
+
+[node name="Data" parent="." instance=ExtResource("3_6rvnk")]
+
+[connection signal="pressed" from="Menu_button" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Clear_stats" to="." method="_on_clear_stats_pressed"]

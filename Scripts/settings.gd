@@ -54,7 +54,7 @@ func _on_menu_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 
-## settings buttons ------------------------------------------------------------
+## settings buttons --------------------------------------------------------------------------------
 # score list
 # changes the scores displayed - descritpion found in data.gd - using the clicked item index.
 func _on_score_display_multi_selected(index: int, selected: bool) -> void:
@@ -63,6 +63,16 @@ func _on_score_display_multi_selected(index: int, selected: bool) -> void:
 # text
 # changes the text modifier array - description found in data.gd - using the clicked item index.
 func _on_text_item_clicked(index, at_position, mouse_button_index):
+	# prevent the player from turning all options off
+	var number_false: int = 0
+	for state in data.text_modifiers:
+		if state == false:
+			number_false += 1
+	if (data.text_modifiers[index] && number_false == data.text_modifiers.size() - 1):
+		text.set_focus_mode(0)
+		text.deselect_all()
+		return
+	
 	data.text_modifiers[index] = !data.text_modifiers[index]
 	update_button(index, data.text_modifiers, text)
 # difficulty

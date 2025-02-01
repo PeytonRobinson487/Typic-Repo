@@ -51,19 +51,34 @@ func generate_text(length: int, data: Node2D) -> String:
 		if (data.text_modifiers[index]):
 			filtered_text_modifiers.push_back(index)
 	
+	print("Filtered text: " + str(filtered_text_modifiers))
+	
 	# generate characters
 	var new_text: String = ""
 	var index: int = 0
 	while (new_text.length() < length && index < 100):
-		# 0 - lowercase_allowed
-		# 1 - uppercase_allowed
-		# 2 - numbers_allowed
-		# 3 - symbols_allowed
-		
 		var new_character: String = "a"
-		if (randf() * data.CHAR_MAGNITUDE_CAP < data.hard_character_magnitude):
+		
+		# chance calculation for choosing hard character or normal character
+		# only count the characters allowed by character settings
+		var number_of_relevant_characters: int = 1
+		var relevant_magnitude: float = 0.0
+		var hard_char_index: int = 0
+		while (hard_char_index < data.hard_characters.size() - 1):
+			if (filtered_text_modifiers.has(data.hard_characters[hard_char_index])):
+				number_of_relevant_characters += 1
+				relevant_magnitude += data.hard_characters[hard_char_index + 1]
+				print(data.hard_characters[hard_char_index])
+			hard_char_index += 2
+		
+		var chance: float = randf() * data.CHAR_MAGNITUDE_CAP * (number_of_relevant_characters / 1.1) + 1
+		#print("chance: " + str(chance))
+		#print("relevant_magnitude: " + str(relevant_magnitude))
+		#print("numb rel char: " + str(number_of_relevant_characters))
+		
+		if (chance < relevant_magnitude):
 			new_character = get_hard_character(data)
-		else:
+		if (chance >= relevant_magnitude || !filtered_text_modifiers.has(new_character)):
 			new_character = get_normal_character(filtered_text_modifiers)
 		
 		new_text += new_character

@@ -3164,23 +3164,30 @@ position = Vector2(574, 324)
 [node name="Text" type="Node" parent="."]
 
 [node name="user_input" type="LineEdit" parent="Text"]
-offset_left = 399.0
-offset_top = 1015.0
-offset_right = 717.0
-offset_bottom = 1126.0
+offset_left = 388.0
+offset_top = 1009.0
+offset_right = 706.0
+offset_bottom = 1120.0
 theme_override_font_sizes/font_size = 30
 placeholder_text = "User Input"
 
 [node name="TextMaker" parent="Text" instance=ExtResource("3_dy8h3")]
 offset_left = 285.0
-offset_top = 194.0
+offset_top = 180.0
 offset_right = 864.0
-offset_bottom = 249.0
-theme_override_font_sizes/normal_font_size = 40
+offset_bottom = 257.0
+theme_override_font_sizes/normal_font_size = 60
 scroll_active = false
 autowrap_mode = 0
 deselect_on_focus_loss_enabled = false
 drag_and_drop_selection_enabled = false
+
+[node name="Score Display" type="RichTextLabel" parent="Text"]
+offset_left = 39.0
+offset_top = 16.0
+offset_right = 388.0
+offset_bottom = 168.0
+fit_content = true
 
 [node name="Displays" type="Node" parent="."]
 

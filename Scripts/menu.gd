@@ -40,14 +40,10 @@ func _on_user_input_text_changed(new_text: String) -> void:
 
 func _on_page_list_item_clicked(index, at_position, mouse_button_index):
 	match index:
-		0:
-			get_tree().change_scene_to_file("res://Scenes/game.tscn")
-		1:
-			get_tree().change_scene_to_file("res://Scenes/settings.tscn")
-		2:
-			get_tree().change_scene_to_file("res://Scenes/score.tscn")
-		3:
-			get_tree().quit()
+		0: get_tree().change_scene_to_file("res://Scenes/game.tscn")
+		1: get_tree().change_scene_to_file("res://Scenes/settings.tscn")
+		2: get_tree().change_scene_to_file("res://Scenes/score.tscn")
+		3: get_tree().quit()
 		'_':
 			print("Did not click any buttons.");
 			get_tree().quit()
