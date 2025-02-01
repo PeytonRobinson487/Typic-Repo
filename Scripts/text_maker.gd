@@ -51,44 +51,63 @@ func generate_text(length: int, data: Node2D) -> String:
 		if (data.text_modifiers[index]):
 			filtered_text_modifiers.push_back(index)
 	
-	print("Filtered text: " + str(filtered_text_modifiers))
-	
 	# generate characters
 	var new_text: String = ""
 	var index: int = 0
 	while (new_text.length() < length && index < 100):
-		var new_character: String = "a"
+		# get chance for hard character
+		var return_array: Array
+		calculate_chance(data, filtered_text_modifiers, return_array)
 		
-		# chance calculation for choosing hard character or normal character
-		# only count the characters allowed by character settings
-		var number_of_relevant_characters: int = 1
-		var relevant_magnitude: float = 0.0
-		var hard_char_index: int = 0
-		while (hard_char_index < data.hard_characters.size() - 1):
-			if (filtered_text_modifiers.has(data.hard_characters[hard_char_index])):
-				number_of_relevant_characters += 1
-				relevant_magnitude += data.hard_characters[hard_char_index + 1]
-				print(data.hard_characters[hard_char_index])
-			hard_char_index += 2
-		
-		var chance: float = randf() * data.CHAR_MAGNITUDE_CAP * (number_of_relevant_characters / 1.1) + 1
-		#print("chance: " + str(chance))
-		#print("relevant_magnitude: " + str(relevant_magnitude))
-		#print("numb rel char: " + str(number_of_relevant_characters))
-		
-		if (chance < relevant_magnitude):
-			new_character = get_hard_character(data)
-		if (chance >= relevant_magnitude || !filtered_text_modifiers.has(new_character)):
-			new_character = get_normal_character(filtered_text_modifiers)
-		
-		new_text += new_character
+		# get a character
+		var relevant_magnitude: float = return_array[0]
+		var chance: float = return_array[1]
+		new_text += get_character(filtered_text_modifiers, libraries, data, relevant_magnitude, chance)
 		index += 1
 	
 	if (index == 100):
 		# prevents the program from crashing, and prints an error message to the textbox
 		print("text_maker while loop index: " + str(index))
-		return "S-8ySD,_Error_MSymf9"
+		new_text = "S-8ySD,_Error_MSymf9"
 	return new_text
+
+
+# calculates the chance for getting a hard character
+func calculate_chance(data: Node2D, filtered_text_modifiers: Array, variables: Array) -> void:
+	# count number of relevant characters
+	var number_of_relevant_characters: int = 1
+	var relevant_magnitude: float = 0.0
+	var hard_char_index: int = 0
+	while (hard_char_index < data.hard_characters.size() - 1):
+		for i in filtered_text_modifiers:
+			if (libraries[i].has(data.hard_characters[hard_char_index])):
+				number_of_relevant_characters += 1
+				relevant_magnitude += data.hard_characters[hard_char_index + 1]
+		hard_char_index += 2
+	var chance: float = randf() * data.CHAR_MAGNITUDE_CAP * (number_of_relevant_characters / 3.0) + 1
+	
+	# update return array
+	variables.push_back(relevant_magnitude)
+	variables.push_back(chance)
+
+# gets a character
+func get_character(filtered_text_modifiers: Array, libraries: Array, data: Node2D, relevant_magnitude: float, chance: float) -> String:
+	var new_character: String = ""
+	if (chance < relevant_magnitude):
+		new_character = get_hard_character(data)
+	if (chance >= relevant_magnitude):
+		new_character = get_normal_character(filtered_text_modifiers)
+	else:
+		# check if the character is allowed according to char settings
+		var j: int = 0
+		for i in filtered_text_modifiers:
+			if (libraries[i].has(new_character)):
+				j += 1
+		if (j < filtered_text_modifiers.size()):
+			# character is not allowed
+			new_character = get_normal_character(filtered_text_modifiers)
+	return new_character
+
 
 # generates a random character from one of the character dictionaries
 func get_normal_character(filtered_text_modifiers: Array) -> String:

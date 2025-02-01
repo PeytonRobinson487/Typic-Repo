@@ -29,7 +29,7 @@ func _ready() -> void:
 # takes the player back to the home page
 func _on_button_pressed() -> void:
 	# update more data variables
-	data.average_accuracy = (data.total_score + data.total_wrong) / data.total_score * 100
+	if (data.total_wrong > 0): data.average_accuracy = (data.total_score + data.total_wrong) / data.total_score * 100
 	
 	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
