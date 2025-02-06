@@ -1,8 +1,5 @@
-# We are working on changing the data in the data folder.
-# This will require us to change everything that calls the data.
-# But it is easy to use and makes it easier to do some functions.
-# We are changing this file right now: reset(), save(), and load()
-# We are currently looking at load()
+# We finished data and text maker
+# Now we gotta fix settings, game, score, and player_handler
 
 extends Node2D
 
@@ -23,6 +20,7 @@ var hard_lowercase: Dictionary = {}
 var hard_uppercase: Dictionary = {}
 var hard_number: Dictionary = {}
 var hard_symbol: Dictionary = {}
+var hard_library: Array[Dictionary] = [hard_lowercase, hard_uppercase, hard_number, hard_symbol]
 
 ## Settings Data
 # Difficulty
@@ -49,7 +47,7 @@ var sound_modifiers: Array[bool] = [true, true]
 var score_modifiers: Array[bool] = [true, true, true, true, true]
 
 ## Data handling structure
-var data: Dictionary = {
+var all_data: Dictionary = {
 	"total_score": total_score,
 	"total_wrong": total_wrong,
 	"total_correct": total_correct,
@@ -59,6 +57,7 @@ var data: Dictionary = {
 	"hard_uppercase": hard_uppercase,
 	"hard_number": hard_number,
 	"hard_symbol": hard_symbol,
+	"hard_library": hard_library,
 	"longest_streak": longest_streak,
 	"difficulty": difficulty,
 	"text_modifiers": text_modifiers,
@@ -69,13 +68,28 @@ var data: Dictionary = {
 ## Variable functions: hard_characters & hard_character_magnitude ----------------------------------
 # updates average accuracy
 func update_average_accuracy():
-	if (total_wrong > 0.0): average_accuracy = total_score / total_wrong * 100
+	if (all_data["total_wrong"] > 0.0): all_data["average_accuracy"] = all_data["total_score"] / all_data["total_wrong"] * 100.0
+
+# returns the magnitude for the parameter hard_characters; returns the sum of the values
+func get_char_magnitude(hard_characters: Dictionary) -> float:
+	var magnitude: float = 0.0
+	for key in hard_characters:
+		magnitude += hard_characters[key]
+	return magnitude
+
+# returns all the unique characters in the dictionary hard_characters; retur
+func get_hard_chars(hard_characters: Dictionary) -> Array:
+	var char_array: Array = []
+	for key in hard_characters:
+		char_array.push_back(key)
+	return char_array
+
 
 ### saving and loading -----------------------------------------------------------------------------
 # saves data to save file
 func save_data() -> void:
 	var file = FileAccess.open(_save_path, FileAccess.WRITE)
-	for item in data:
+	for item in all_data:
 		file.store_var(item)
 	print("Data saved!")
 
@@ -88,34 +102,36 @@ func load_data() -> void:
 		save_data()
 		return
 	
-	for key in data:
+	for key in all_data:
 		if (file != null):
 			var value = file.get_var()
-			if (typeof(value) == typeof(data[key])): data[key] = value
+			if (typeof(value) == typeof(all_data[key])): all_data[key] = value
 	
 	file.close()
 	print("Data loaded!")
 
 # prints all data
 func print_all_data() -> void:
-	for key in data:
-		var value = data[key]
-		print(str(key) + " | " + str(value))
+	for key in all_data:
+		print(str(key) + " : " + str(all_data[key]))
 
 # resets all data
 func reset_data() -> void:
-	data
-	#total_wrong = 0
-	#total_correct = 0
-	#total_score = 0
-	#average_accuracy = 0.0
-	#player_level = 0
-	#hard_characters = []
-	#hard_character_magnitude = 0.0
-	#longest_streak = 0
-	#difficulty = Difficulty.EASY
-	#text_modifiers = []
-	#sound_modifiers = []
-	#score_modifiers = []
+	# reset all variables
+	all_data["total_score"] = 0
+	all_data["total_wrong"] = 0
+	all_data["total_correct"] = 0
+	all_data["average_accuracy"] = 100.0
+	all_data["player_level"] = 1
+	all_data["longest_streak"] = 0
+	all_data["hard_lowercase"].clear()
+	all_data["hard_uppercase"].clear()
+	all_data["hard_number"].clear()
+	all_data["hard_symbol"].clear()
+	all_data["hard_library"] = [hard_lowercase, hard_uppercase, hard_number, hard_symbol]
+	all_data["difficulty"] = Difficulty.EASY
+	all_data["text_modifiers"] = [true, true, true, true]
+	all_data["sound_modifiers"] = [true, true]
+	all_data["score_modifiers"] = [true, true, true, true, true]
 	save_data()
 	print("Data reset!")

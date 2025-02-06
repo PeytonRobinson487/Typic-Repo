@@ -46,10 +46,15 @@ var libraries: Array = [
 # generates text based on settings and hard characters
 func generate_text(length: int, data: Node2D) -> String:
 	# add the indexes of the true values
-	var filtered_text_modifiers: Array
-	for index in data.text_modifiers.size():
-		if (data.text_modifiers[index]):
-			filtered_text_modifiers.push_back(index)
+	var relevant_text_modifiers: Array
+	for index in data.all_data["text_modifiers"].size():
+		if (data.all_data["text_modifiers"][index]):
+			relevant_text_modifiers.push_back(index)
+	
+	# get the size of all relevant arrays
+	var relevant_chars: Dictionary = {}
+	for index in relevant_text_modifiers:
+		relevant_chars.merge(data.all_data["hard_library"][index])
 	
 	# generate characters
 	var new_text: String = ""
@@ -57,12 +62,16 @@ func generate_text(length: int, data: Node2D) -> String:
 	while (new_text.length() < length && index < 100):
 		# get chance for hard character
 		var return_array: Array
-		calculate_chance(data, filtered_text_modifiers, return_array)
+		var chance: float = randf() * data.CHAR_MAGNITUDE_CAP * (relevant_chars.size() / 3.0) + 1
 		
 		# get a character
-		var relevant_magnitude: float = return_array[0]
-		var chance: float = return_array[1]
-		new_text += get_character(filtered_text_modifiers, libraries, data, relevant_magnitude, chance)
+		if (chance < data.get_char_magnitude(relevant_chars)):
+			new_text += get_hard_character(relevant_chars)
+		else:
+			# normal character
+			var rand_index: int = relevant_text_modifiers.pick_random()
+			new_text += libraries[rand_index].find_key(randi() % libraries[rand_index].size() + 1)
+		
 		index += 1
 	
 	if (index == 100):
@@ -72,64 +81,20 @@ func generate_text(length: int, data: Node2D) -> String:
 	return new_text
 
 
-# calculates the chance for getting a hard character
-func calculate_chance(data: Node2D, filtered_text_modifiers: Array, variables: Array) -> void:
-	# count number of relevant characters
-	var number_of_relevant_characters: int = 1
-	var relevant_magnitude: float = 0.0
-	var hard_char_index: int = 0
-	while (hard_char_index < data.hard_characters.size() - 1):
-		for i in filtered_text_modifiers:
-			if (libraries[i].has(data.hard_characters[hard_char_index])):
-				number_of_relevant_characters += 1
-				relevant_magnitude += data.hard_characters[hard_char_index + 1]
-		hard_char_index += 2
-	var chance: float = randf() * data.CHAR_MAGNITUDE_CAP * (number_of_relevant_characters / 3.0) + 1
-	
-	# update return array
-	variables.push_back(relevant_magnitude)
-	variables.push_back(chance)
-
-# gets a character
-func get_character(filtered_text_modifiers: Array, libraries: Array, data: Node2D, relevant_magnitude: float, chance: float) -> String:
-	var new_character: String = ""
-	if (chance < relevant_magnitude):
-		new_character = get_hard_character(data)
-	if (chance >= relevant_magnitude):
-		new_character = get_normal_character(filtered_text_modifiers)
-	else:
-		# check if the character is allowed according to char settings
-		var j: int = 0
-		for i in filtered_text_modifiers:
-			if (libraries[i].has(new_character)):
-				j += 1
-		if (j < filtered_text_modifiers.size()):
-			# character is not allowed
-			new_character = get_normal_character(filtered_text_modifiers)
-	return new_character
-
-
-# generates a random character from one of the character dictionaries
-func get_normal_character(filtered_text_modifiers: Array) -> String:
-	var rand_index: int = filtered_text_modifiers.pick_random()
-	return libraries[rand_index].find_key(randi() % libraries[rand_index].size() + 1)
-
 # uses hard text to get a weak character for the player
-func get_hard_character(data: Node2D) -> String:
+func get_hard_character(hard_characters: Dictionary) -> String:
 	# create sum prefix for chance_pool
-	var sum_prefix: Array
+	var sum_prefix: Array = []
 	var sum: float = 0.0
-	var i: int = 1;
-	while (i < data.hard_characters.size()):
-		sum += data.hard_characters[i]
+	var i: int = 1
+	for key in hard_characters:
+		sum += hard_characters[key]
 		sum_prefix.push_back(sum)
-		i += 2
 	
 	# compare random value and find which key to use
 	var rand: float = randf() * sum_prefix[sum_prefix.size() - 1]
 	i = 0
-	while (i < sum_prefix.size() && rand > sum_prefix[i]):
+	while (i < sum_prefix.size() && sum_prefix[i] < rand):
 		i += 1
 	
-	var new_char: String = data.hard_characters[i * 2]
-	return new_char
+	return hard_characters.keys()[i]
