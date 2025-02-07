@@ -56,6 +56,9 @@ func generate_text(length: int, data: Node2D) -> String:
 	for index in relevant_text_modifiers:
 		relevant_chars.merge(data.all_data["hard_library"][index])
 	
+	print(relevant_chars)
+	print(relevant_text_modifiers)
+	
 	# generate characters
 	var new_text: String = ""
 	var index: int = 0
@@ -65,7 +68,7 @@ func generate_text(length: int, data: Node2D) -> String:
 		var chance: float = randf() * data.CHAR_MAGNITUDE_CAP * (relevant_chars.size() / 3.0) + 1
 		
 		# get a character
-		if (chance < data.get_char_magnitude(relevant_chars)):
+		if (chance < data.sum_magnitude(relevant_chars)):
 			new_text += get_hard_character(relevant_chars)
 		else:
 			# normal character

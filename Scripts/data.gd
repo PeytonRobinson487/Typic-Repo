@@ -1,6 +1,3 @@
-# We finished data and text maker
-# Now we gotta fix settings, game, score, and player_handler
-
 extends Node2D
 
 const _save_path: String = "res://saved_data.txt"
@@ -66,31 +63,19 @@ var all_data: Dictionary = {
 }
 
 ## Variable functions: hard_characters & hard_character_magnitude ----------------------------------
-# updates average accuracy
-func update_average_accuracy():
-	if (all_data["total_wrong"] > 0.0): all_data["average_accuracy"] = all_data["total_score"] / all_data["total_wrong"] * 100.0
-
-# returns the magnitude for the parameter hard_characters; returns the sum of the values
-func get_char_magnitude(hard_characters: Dictionary) -> float:
+# returns the sum of the specified dictionary
+func sum_magnitude(hard_chars: Dictionary) -> float:
 	var magnitude: float = 0.0
-	for key in hard_characters:
-		magnitude += hard_characters[key]
+	for key in hard_chars:
+		magnitude += hard_chars[key]
 	return magnitude
-
-# returns all the unique characters in the dictionary hard_characters; retur
-func get_hard_chars(hard_characters: Dictionary) -> Array:
-	var char_array: Array = []
-	for key in hard_characters:
-		char_array.push_back(key)
-	return char_array
-
 
 ### saving and loading -----------------------------------------------------------------------------
 # saves data to save file
 func save_data() -> void:
 	var file = FileAccess.open(_save_path, FileAccess.WRITE)
-	for item in all_data:
-		file.store_var(item)
+	for key in all_data:
+		file.store_var(all_data[key])
 	print("Data saved!")
 
 # loads data

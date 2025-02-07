@@ -58,36 +58,44 @@ func _on_menu_button_pressed() -> void:
 # score list
 # changes the scores displayed - descritpion found in data.gd - using the clicked item index.
 func _on_score_display_multi_selected(index: int, selected: bool) -> void:
-	data.score_modifiers[index] = !data.score_modifiers[index]
-	update_button(index, data.score_modifiers, score_display)
+	data.all_data["score_modifiers"][index] = !data.all_data["score_modifiers"][index]
+	update_button(index, data.all_data["score_modifiers"], score_display)
+
 # text
 # changes the text modifier array - description found in data.gd - using the clicked item index.
 func _on_text_item_clicked(index, at_position, mouse_button_index):
+	var text_mods: Array = data.all_data["text_modifiers"]
+	
 	# prevent the player from turning all options off
 	var number_false: int = 0
-	for state in data.text_modifiers:
+	for state in text_mods:
 		if state == false:
 			number_false += 1
-	if (data.text_modifiers[index] && number_false == data.text_modifiers.size() - 1):
+	if (text_mods[index] && number_false == text_mods.size() - 1):
 		text.set_focus_mode(0)
 		text.deselect_all()
 		return
 	
-	data.text_modifiers[index] = !data.text_modifiers[index]
-	update_button(index, data.text_modifiers, text)
+	text_mods[index] = !text_mods[index]
+	update_button(index, text_mods, text)
+	
+	# update data
+	data.all_data["text_modifiers"] = text_mods
+
 # difficulty
 # changes the difficulty using the clicked item index.
 func _on_difficulty_item_clicked(index, at_position, mouse_button_index):
+	var dif_setting: int = data.all_data["difficulty"]
+	
 	match index:
-		0:
-			data.difficulty = data.Difficulty.EASY
-		1:
-			data.difficulty = data.Difficulty.MEDIUM
-		2:
-			data.difficulty = data.Difficulty.HARD
-		3:
-			data.difficulty = data.Difficulty.PRO
-	update_difficulty_button(index)
+		0: dif_setting = data.Difficulty.EASY
+		1: dif_setting = data.Difficulty.MEDIUM
+		2: dif_setting = data.Difficulty.HARD
+		3: dif_setting = data.Difficulty.PRO
+	
+	update_difficulty_button()
+	data.all_data["difficulty"] = dif_setting
+
 # sound
 # changes the sound options array - description found in data.gd - using the cilcked item index
 func _on_sound_item_clicked(index, at_position, mouse_button_index):
@@ -110,20 +118,18 @@ func update_button(index: int, option_array: Array, item_list: ItemList) -> void
 	item_list.deselect_all()
 
 # updates difficulty buttons
-func update_difficulty_button(index: int) -> void:
+func update_difficulty_button() -> void:
+	var dif_setting: int = data.all_data["difficulty"]
+	
 	# colors
 	for i in data.Difficulty.size():
 		difficulty.set_item_custom_fg_color(i, COLOR_OFF)
 	
-	match data.difficulty:
-		data.Difficulty.EASY:
-			difficulty.set_item_custom_fg_color(0, COLOR_ON)
-		data.Difficulty.MEDIUM:
-			difficulty.set_item_custom_fg_color(1, COLOR_ON)
-		data.Difficulty.HARD:
-			difficulty.set_item_custom_fg_color(2, COLOR_ON)
-		data.Difficulty.PRO:
-			difficulty.set_item_custom_fg_color(3, COLOR_ON)
+	match dif_setting:
+		data.Difficulty.EASY: difficulty.set_item_custom_fg_color(0, COLOR_ON)
+		data.Difficulty.MEDIUM: difficulty.set_item_custom_fg_color(1, COLOR_ON)
+		data.Difficulty.HARD: difficulty.set_item_custom_fg_color(2, COLOR_ON)
+		data.Difficulty.PRO: difficulty.set_item_custom_fg_color(3, COLOR_ON)
 	
 	# removes user focus
 	difficulty.set_focus_mode(0)
@@ -132,10 +138,9 @@ func update_difficulty_button(index: int) -> void:
 # updates all buttons according to scene variable data: score, text, sound, difficulty
 func update_all_buttons():
 	for i in data.score_modifiers.size():
-		update_button(i, data.score_modifiers, score_display)
+		update_button(i, data.all_data["score_modifiers"], score_display)
 	for i in data.text_modifiers.size():
-		update_button(i, data.text_modifiers, text)
+		update_button(i, data.all_data["text_modifiers"], text)
 	for i in data.sound_modifiers.size():
-		update_button(i, data.sound_modifiers, sound)
-	for i in data.Difficulty.size():
-		update_difficulty_button(i)
+		update_button(i, data.all_data["sound_modifiers"], sound)
+	update_difficulty_button()
