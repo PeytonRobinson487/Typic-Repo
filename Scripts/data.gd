@@ -6,31 +6,27 @@ const _save_path: String = "res://saved_data.txt"
 
 const CHAR_MAGNITUDE_CAP: float = 20.0
 
-
-## Dictionarys with appropriate characters
-# lowercase letters
-const lowercase_letters: Dictionary = {
-	"a": 0, "b": 1, "c": 2, "d": 3, "e": 4, "f": 5, "g": 6, "h": 7, "i": 8, "j": 9,
-	"k": 10, "l": 11, "m": 12, "n": 13, "o": 14, "p": 15, "q": 16, "r": 17, "s": 18, "t": 19,
-	"u": 20, "v": 21, "w": 22, "x": 23, "y": 24, "z": 25
-}
-const uppercase_letters: Dictionary = {
-	"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7, "I": 8, "J": 9,
-	"K": 10, "L": 11, "M": 12, "N": 13, "O": 14, "P": 15, "Q": 16, "R": 17, "S": 18, "T": 19,
-	"U": 20, "V": 21, "W": 22, "X": 23, "Y": 24, "Z": 25
-}
-const numbers: Dictionary = {
-	"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9
-}
-const symbols: Dictionary = {
-	"!": 0, "@": 1, "#": 2, "$": 3, "%": 4, "^": 5, 
-	"&": 6, "*": 7, "(": 8, ")": 9, "-": 10, "_": 11, 
-	"+": 12, "=": 13, "[": 14, "]": 15, "{": 16, "}": 17, 
-	":": 18, ";": 19, "'": 20, '\"': 21, "<": 22, ">": 23, 
-	",": 24, ".": 25, "?": 26, "/": 27, "\\": 28
-}
+# Dictionaries with appropriate characters
+const lowercase_letters: PackedStringArray = [
+	"a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+	"k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+	"u", "v", "w", "x", "y", "z"
+]
+const uppercase_letters: PackedStringArray = [
+	"A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+	"K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
+	"U", "V", "W", "X", "Y", "Z"
+]
+const numbers: PackedStringArray = [
+	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
+]
+const symbols: PackedStringArray = [
+	"!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
+	"-", "_", "+", "=", "[", "]", "{", "}", ":", ";",
+	"'", "\"", "<", ">", ",", ".", "?", "/", "`", "~"
+]
 # holds the dictionaries - enables picking them by index
-const libraries: Array[Dictionary] = [ lowercase_letters, uppercase_letters, numbers, symbols ]
+const libraries: Array[Array] = [ lowercase_letters, uppercase_letters, numbers, symbols ]
 
 
 ### Variables --------------------------------------------------------------------------------------

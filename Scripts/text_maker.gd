@@ -36,7 +36,7 @@ func generate_text(length: int, data: Node2D) -> String:
 		else:
 			# normal character
 			var rand_index: int = relevant_text_modifiers.pick_random()
-			new_text += data.libraries[rand_index].find_key(randi() % data.libraries[rand_index].size())
+			new_text += data.libraries[rand_index].pick_random()
 		
 		index += 1
 	

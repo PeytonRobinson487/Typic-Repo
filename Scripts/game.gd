@@ -34,8 +34,7 @@ func _on_button_pressed() -> void:
 	# update more data variables
 	# update average accuracy
 	if (data.all_data["total_wrong"] > 0):
-		data.all_data["average_accuracy"] = (data.all_data["total_score"] + data.all_data["total_wrong"])
-		data.all_data["average_accuracy"] /= data.all_data["total_score"] * 100.0
+		data.all_data["average_accuracy"] = (data.all_data["total_score"] / data.all_data["total_score"]) * 100.0
 	
 	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
@@ -45,8 +44,22 @@ func _on_button_pressed() -> void:
 func _on_user_input_text_changed(new_text: String) -> void:
 	var c_text: String = text_maker.text
 	
-	# check if it matches computer text (c_text)
 	var user_letter: String = new_text.substr(0, 1)
+	
+	# find what library the character is in
+	var hard_char_index: int = 0
+	var all_chars: Array = []
+	var index: int = 0
+	for flag in data.all_data["text_modifiers"]:
+		if (flag):
+			all_chars.append_array(data.libraries[index])
+		index += 1
+	# only allow relevant characters
+	if (!all_chars.has(user_letter)):
+		user_input.text = ""
+		return
+	
+	# check if it matches computer text (c_text)
 	if (c_text.substr(0, 1).similarity(user_letter)):
 		c_text = correct_input(c_text, user_letter, data)
 	else:
@@ -81,18 +94,23 @@ func correct_input(computer_text: String, user_letter: String, data: Node2D) -> 
 	if (current_streak > data.all_data["longest_streak"]):
 		data.all_data["longest_streak"] = current_streak
 	if (current_wrong > 0):
-		current_accuracy = (current_correct + current_wrong) / total_score * 100.0
+		current_accuracy = (current_correct / total_score) * 100.0
 	
 	return computer_text.substr(1, computer_text.length())
 
 # user inputs an incorrect character
 func wrong_input(user_letter: String, data: Node2D) -> void:
+	# update the hard character libraries
 	var index: int = 0
-	for hard_chars in data.all_data["hard_library"]:
-		if (hard_chars.has(user_letter)):
-			hard_chars[user_letter] += 1.0 + randf() / 2.0
-		else:
-			hard_chars[user_letter] = 1.0
+	while (index < data.libraries.size()):
+		if (data.libraries[index].has(user_letter)):
+			if (data.all_data["hard_library"][index].has(user_letter)):
+				data.all_data["hard_library"][index][user_letter] += 1.0 + randf() / 2.0
+				if (data.all_data["hard_library"][index][user_letter] > data.CHAR_MAGNITUDE_CAP):
+					data.all_data["hard_library"][index][user_letter] = data.CHAR_MAGNITUDE_CAP
+			else:
+				data.all_data["hard_library"][index][user_letter] = 1.0
+		index += 1
 	
 	# score
 	data.all_data["total_score"] += 1
@@ -103,7 +121,7 @@ func wrong_input(user_letter: String, data: Node2D) -> void:
 	current_streak = 0
 	
 	if (current_wrong > 0):
-		current_accuracy = (current_correct + current_wrong) / (total_score * 100.0)
+		current_accuracy = (current_correct / total_score) * 100.0
 
 
 # updates TextMaker text
@@ -145,7 +163,7 @@ func display_hard_chars() -> String:
 		return "Hard text: []\n"
 	
 	# sort chars
-	var sorted_hard_chars: Array
+	var sorted_hard_chars: Array = []
 	for key in all_hard_chars:
 		sorted_hard_chars = insertion_sort(all_hard_chars)
 	
@@ -162,11 +180,18 @@ func display_hard_chars() -> String:
 func insertion_sort(hard_chars: Dictionary) -> Array:
 	var new_array: Array = []
 	for key in hard_chars:
-		var index: int = 1
-		while (index < new_array.size() - 3 && new_array[index] > hard_chars[key]):
-			index += 2
+		new_array.push_back(key)
+		new_array.push_back(hard_chars[key])
 		
-		new_array.insert(index - 1, hard_chars[key])
-		new_array.insert(index - 1, key)
+		var index: int = new_array.size() - 1
+		while (index > 1 && new_array[index] > new_array[index - 2]):
+			# swap
+			var value_temp: float = new_array[index]
+			var key_temp: String = new_array[index - 1]
+			new_array[index] = new_array[index - 2]
+			new_array[index - 1] = new_array[index - 3]
+			new_array[index - 2] = value_temp
+			new_array[index - 3] = key_temp
+			index -= 2
 	
 	return new_array
