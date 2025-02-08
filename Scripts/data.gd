@@ -1,9 +1,7 @@
 extends Node2D
 
-
 ## Constants
 const _save_path: String = "res://saved_data.txt"
-
 const CHAR_MAGNITUDE_CAP: float = 20.0
 
 # Dictionaries with appropriate characters
@@ -31,9 +29,9 @@ const libraries: Array[Array] = [ lowercase_letters, uppercase_letters, numbers,
 
 ### Variables --------------------------------------------------------------------------------------
 ## Score Data
+var total_score: int = 0
 var total_wrong: int = 0
 var total_correct: int = 0
-var total_score: int = 0
 var average_accuracy: float = 100.0
 var longest_streak: int = 0
 var player_level: int = 1
@@ -46,8 +44,8 @@ var hard_library: Array[Dictionary] = [hard_lowercase, hard_uppercase, hard_numb
 
 ## Settings Data
 # Difficulty
-enum Difficulty { EASY = 0, MEDIUM = 1, HARD = 2, PRO = 3 }
-var difficulty: Difficulty = Difficulty.EASY
+enum Sensitivity { LOW = 0, MEDIUM = 1, HIGH = 2, DELICATE = 4 }
+var sensitivity: Sensitivity = Sensitivity.LOW
 
 # Allowed Characters
 # 0 - lowercase_allowed
@@ -62,11 +60,13 @@ var text_modifiers: Array[bool] = [true, true, true, true]
 var sound_modifiers: Array[bool] = [true, true]
 
 # Display
-# 0 - correct_score_displayed
-# 1 - wrong_score_displayed
-# 2 - accuracy displayed
-# 3 - hard_text_displayed
-var score_modifiers: Array[bool] = [true, true, true, true, true]
+# 0 - total score
+# 1 - correct score
+# 2 - wrong score
+# 3 - accuracy
+# 4 - streak
+# 5 - hard characters
+var score_modifiers: Array[bool] = [true, true, true, true, true, true]
 
 ## Data handling structure
 var all_data: Dictionary = {
@@ -76,12 +76,9 @@ var all_data: Dictionary = {
 	"average_accuracy": average_accuracy,
 	"player_level": player_level,
 	"hard_lowercase": hard_lowercase,
-	"hard_uppercase": hard_uppercase,
-	"hard_number": hard_number,
-	"hard_symbol": hard_symbol,
 	"hard_library": hard_library,
 	"longest_streak": longest_streak,
-	"difficulty": difficulty,
+	"sensitivity": sensitivity,
 	"text_modifiers": text_modifiers,
 	"sound_modifiers": sound_modifiers,
 	"score_modifiers": score_modifiers
@@ -94,6 +91,15 @@ func sum_magnitude(hard_chars: Dictionary) -> float:
 	for key in hard_chars:
 		magnitude += hard_chars[key]
 	return magnitude
+
+# updates player level
+func update_level() -> void:
+	# equation: sqrt(x)
+	var level: int = all_data["player_level"]
+	while (all_data["total_correct"] > log(float(level)) * 25):
+		level += 1
+	all_data["player_level"] = level - 1
+
 
 ### saving and loading -----------------------------------------------------------------------------
 # saves data to save file
@@ -125,8 +131,9 @@ func print_all_data() -> void:
 	for key in all_data:
 		print(str(key) + " : " + str(all_data[key]))
 
-# resets all data
-func reset_data() -> void:
+
+# resets all score data
+func reset_score_data() -> void:
 	# reset all variables
 	all_data["total_score"] = 0
 	all_data["total_wrong"] = 0
@@ -134,14 +141,15 @@ func reset_data() -> void:
 	all_data["average_accuracy"] = 100.0
 	all_data["player_level"] = 1
 	all_data["longest_streak"] = 0
-	all_data["hard_lowercase"].clear()
-	all_data["hard_uppercase"].clear()
-	all_data["hard_number"].clear()
-	all_data["hard_symbol"].clear()
 	all_data["hard_library"] = [hard_lowercase, hard_uppercase, hard_number, hard_symbol]
-	all_data["difficulty"] = Difficulty.EASY
+	save_data()
+	print("Scores reset!")
+
+# resets all settings
+func reset_settings() -> void:
+	all_data["sensitivity"] = Sensitivity.LOW
 	all_data["text_modifiers"] = [true, true, true, true]
 	all_data["sound_modifiers"] = [true, true]
-	all_data["score_modifiers"] = [true, true, true, true, true]
+	all_data["score_modifiers"] = [true, true, true, true, true, true]
 	save_data()
-	print("Data reset!")
+	print("Settings reset!")

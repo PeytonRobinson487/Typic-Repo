@@ -1,23 +1,19 @@
-# Right now, I am fixing how the wrong_answer adds new letters. It adds all characters into the first array right now.
-# I need to change it to check if it is in the correct library first, then add it
-# I may need to create for functions, or four dictionaries, bruh why.
-
 extends Node2D
 
 @onready var user_input = $Text/user_input
 @onready var text_maker = $Text/TextMaker
 @onready var data: Node2D = $Scripts/Data
 @onready var score_display: RichTextLabel = $"Text/Score Display"
-
+@onready var player_handler: Node = $Scripts/PlayerHandler
 
 ## Variables ---------------------------------------------------------------------------------------
 
 var total_score: int = 0
-var current_score: int = 0
 var current_accuracy: float = 100.0
 var current_wrong: int = 0
 var current_correct: int = 0
 var current_streak: int = 0
+var current_longest_streak: int = 0
 
 ## Functions ---------------------------------------------------------------------------------------
 # initialization
@@ -29,12 +25,14 @@ func _ready() -> void:
 
 
 ## menu button
-# takes the player back to the home page
-func _on_button_pressed() -> void:
+# exit to the home page
+func _exit_game() -> void:
 	# update more data variables
 	# update average accuracy
 	if (data.all_data["total_wrong"] > 0):
-		data.all_data["average_accuracy"] = (data.all_data["total_score"] / data.all_data["total_score"]) * 100.0
+		data.all_data["average_accuracy"] = (float(data.all_data["total_correct"]) / float(data.all_data["total_score"])) * 100.0
+	
+	data.update_level()
 	
 	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
@@ -42,28 +40,17 @@ func _on_button_pressed() -> void:
 
 # checks computer displayed text with submitted player text
 func _on_user_input_text_changed(new_text: String) -> void:
-	var c_text: String = text_maker.text
-	
-	var user_letter: String = new_text.substr(0, 1)
-	
-	# find what library the character is in
-	var hard_char_index: int = 0
-	var all_chars: Array = []
-	var index: int = 0
-	for flag in data.all_data["text_modifiers"]:
-		if (flag):
-			all_chars.append_array(data.libraries[index])
-		index += 1
-	# only allow relevant characters
-	if (!all_chars.has(user_letter)):
-		user_input.text = ""
-		return
-	
 	# check if it matches computer text (c_text)
+	var user_letter: String = new_text.substr(0, 1)
+	var c_text: String = text_maker.text
 	if (c_text.substr(0, 1).similarity(user_letter)):
 		c_text = correct_input(c_text, user_letter, data)
 	else:
-		wrong_input(user_letter, data)
+		wrong_input(c_text.substr(0, 1), data)
+	
+	# update accuracy
+	if (current_wrong > 0):
+		current_accuracy = (float(current_correct) / float(total_score)) * 100.0
 	
 	display_stats()
 	user_input.text = ""
@@ -88,28 +75,30 @@ func correct_input(computer_text: String, user_letter: String, data: Node2D) -> 
 	data.all_data["total_score"] += 1
 	
 	total_score += 1
-	current_score += 1
+	current_correct += 1
 	current_streak += 1
 	
+	if (current_streak > current_longest_streak):
+		current_longest_streak = current_streak
 	if (current_streak > data.all_data["longest_streak"]):
 		data.all_data["longest_streak"] = current_streak
-	if (current_wrong > 0):
-		current_accuracy = (current_correct / total_score) * 100.0
 	
 	return computer_text.substr(1, computer_text.length())
 
 # user inputs an incorrect character
-func wrong_input(user_letter: String, data: Node2D) -> void:
+func wrong_input(c_text: String, data: Node2D) -> void:
 	# update the hard character libraries
 	var index: int = 0
 	while (index < data.libraries.size()):
-		if (data.libraries[index].has(user_letter)):
-			if (data.all_data["hard_library"][index].has(user_letter)):
-				data.all_data["hard_library"][index][user_letter] += 1.0 + randf() / 2.0
-				if (data.all_data["hard_library"][index][user_letter] > data.CHAR_MAGNITUDE_CAP):
-					data.all_data["hard_library"][index][user_letter] = data.CHAR_MAGNITUDE_CAP
-			else:
-				data.all_data["hard_library"][index][user_letter] = 1.0
+		var hard_chars = data.all_data["hard_library"][index]
+		if (hard_chars.has(c_text)):
+			hard_chars[c_text] += data.all_data["sensitivity"] + randf() / 2.0
+			if (hard_chars[c_text] > data.CHAR_MAGNITUDE_CAP):
+				hard_chars[c_text] = data.CHAR_MAGNITUDE_CAP
+		elif (data.libraries[index].has(c_text)):
+			hard_chars[c_text] = 1.0
+		
+		data.all_data["hard_library"][index] = hard_chars
 		index += 1
 	
 	# score
@@ -119,9 +108,6 @@ func wrong_input(user_letter: String, data: Node2D) -> void:
 	total_score += 1
 	current_wrong += 1
 	current_streak = 0
-	
-	if (current_wrong > 0):
-		current_accuracy = (current_correct / total_score) * 100.0
 
 
 # updates TextMaker text
@@ -143,11 +129,14 @@ func display_stats():
 	var score_mods = data.all_data["score_modifiers"]
 	
 	var new_text: String = ""
-	if (score_mods[0]): new_text += "Correct: " + str(current_score) + "\n"
-	if (score_mods[1]): new_text += "Missed: " + str(current_wrong) + "\n"
-	if (score_mods[2]): new_text += "Accuracy: " + str(current_accuracy) + "%\n"
-	if (score_mods[3]): new_text += "Streak: " + str(current_streak) + "\n"
-	if (score_mods[4]): new_text += display_hard_chars()
+	if (score_mods[0]): new_text += "Total: " + str(total_score) + "\n"
+	if (score_mods[1]): new_text += "Correct: " + str(current_correct) + "\n"
+	if (score_mods[2]): new_text += "Missed: " + str(current_wrong) + "\n"
+	if (score_mods[3]): new_text += "Accuracy: " + str(round(current_accuracy * 10) / 10.0) + "%\n"
+	if (score_mods[4]):
+		new_text += "Streak: " + str(current_streak) + "\n"
+		new_text += "Current longest: " + str(current_longest_streak) + "\n"
+	if (score_mods[5]): new_text += display_hard_chars()
 	
 	score_display.text = new_text
 

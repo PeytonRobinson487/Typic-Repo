@@ -3,8 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_1186q"]
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_ech1o"]
 [ext_resource type="PackedScene" uid="uid://61ft10y0nqei" path="res://Scenes/text_maker.tscn" id="3_dy8h3"]
-[ext_resource type="PackedScene" uid="uid://dgwcd80cthckh" path="res://Scenes/player_handler.tscn" id="4_lktuf"]
-[ext_resource type="Script" path="res://Scripts/player_handler.gd" id="5_mxu1c"]
+[ext_resource type="PackedScene" uid="uid://cx84x3wbxbf4m" path="res://Scenes/player_handler.tscn" id="4_lktuf"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="6_8tk0y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vd7kh"]
@@ -3149,6 +3148,8 @@ texture = ExtResource("1_1186q")
 [sub_resource type="TileSet" id="TileSet_b02t8"]
 sources/0 = SubResource("TileSetAtlasSource_vd7kh")
 
+[sub_resource type="GDScript" id="GDScript_om5xk"]
+
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ech1o")
 
@@ -3172,10 +3173,10 @@ theme_override_font_sizes/font_size = 30
 placeholder_text = "User Input"
 
 [node name="TextMaker" parent="Text" instance=ExtResource("3_dy8h3")]
-offset_left = 285.0
+offset_left = 348.0
 offset_top = 180.0
-offset_right = 864.0
-offset_bottom = 257.0
+offset_right = 802.0
+offset_bottom = 277.0
 theme_override_font_sizes/normal_font_size = 60
 scroll_active = false
 autowrap_mode = 0
@@ -3203,10 +3204,10 @@ text = "Menu"
 [node name="Scripts" type="Node" parent="."]
 
 [node name="PlayerHandler" parent="Scripts" instance=ExtResource("4_lktuf")]
-script = ExtResource("5_mxu1c")
+script = SubResource("GDScript_om5xk")
 
 [node name="Data" parent="Scripts" instance=ExtResource("6_8tk0y")]
 
 [connection signal="focus_exited" from="Text/user_input" to="." method="_on_user_input_focus_exited"]
 [connection signal="text_changed" from="Text/user_input" to="." method="_on_user_input_text_changed"]
-[connection signal="pressed" from="Buttons/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Buttons/Button" to="." method="_exit_game"]

@@ -3,12 +3,13 @@ extends Node2D
 ### VARIABLES --------------------------------------------------------------------------------------
 
 ## button variables
+
 # array item indexes
 # 0 - easy
 # 1 - medium
 # 2 - hard
 # 3 - pro
-@onready var difficulty: ItemList = $Node/Difficulty
+@onready var sensitivity: ItemList = $Node/Sensitivity
 
 # 0 - lowercase
 # 1 - uppercase
@@ -53,6 +54,10 @@ func _on_menu_button_pressed() -> void:
 	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
+# resets settings
+func _on_reset_settings_pressed() -> void:
+	data.reset_settings()
+	update_all_buttons()
 
 ## settings buttons --------------------------------------------------------------------------------
 # score list
@@ -84,17 +89,14 @@ func _on_text_item_clicked(index, at_position, mouse_button_index):
 
 # difficulty
 # changes the difficulty using the clicked item index.
-func _on_difficulty_item_clicked(index, at_position, mouse_button_index):
-	var dif_setting: int = data.all_data["difficulty"]
-	
+func _on_sensitivity_item_clicked(index, at_position, mouse_button_index):
 	match index:
-		0: dif_setting = data.Difficulty.EASY
-		1: dif_setting = data.Difficulty.MEDIUM
-		2: dif_setting = data.Difficulty.HARD
-		3: dif_setting = data.Difficulty.PRO
+		0: data.all_data["sensitivity"] = data.Sensitivity.LOW
+		1: data.all_data["sensitivity"] = data.Sensitivity.MEDIUM
+		2: data.all_data["sensitivity"] = data.Sensitivity.HIGH
+		3: data.all_data["sensitivity"] = data.Sensitivity.DELICATE
 	
-	update_difficulty_button()
-	data.all_data["difficulty"] = dif_setting
+	update_sensitivity_button()
 
 # sound
 # changes the sound options array - description found in data.gd - using the cilcked item index
@@ -118,24 +120,22 @@ func update_button(index: int, option_array: Array, item_list: ItemList) -> void
 	item_list.deselect_all()
 
 # updates difficulty buttons
-func update_difficulty_button() -> void:
-	var dif_setting: int = data.all_data["difficulty"]
-	
+func update_sensitivity_button() -> void:
 	# colors
-	for i in data.Difficulty.size():
-		difficulty.set_item_custom_fg_color(i, COLOR_OFF)
+	for i in data.Sensitivity.size():
+		sensitivity.set_item_custom_fg_color(i, COLOR_OFF)
 	
-	match dif_setting:
-		data.Difficulty.EASY: difficulty.set_item_custom_fg_color(0, COLOR_ON)
-		data.Difficulty.MEDIUM: difficulty.set_item_custom_fg_color(1, COLOR_ON)
-		data.Difficulty.HARD: difficulty.set_item_custom_fg_color(2, COLOR_ON)
-		data.Difficulty.PRO: difficulty.set_item_custom_fg_color(3, COLOR_ON)
+	match data.all_data["sensitivity"]:
+		data.Sensitivity.LOW: sensitivity.set_item_custom_fg_color(0, COLOR_ON)
+		data.Sensitivity.MEDIUM: sensitivity.set_item_custom_fg_color(1, COLOR_ON)
+		data.Sensitivity.HIGH: sensitivity.set_item_custom_fg_color(2, COLOR_ON)
+		data.Sensitivity.DELICATE: sensitivity.set_item_custom_fg_color(3, COLOR_ON)
 	
 	# removes user focus
-	difficulty.set_focus_mode(0)
-	difficulty.deselect_all()
+	sensitivity.set_focus_mode(0)
+	sensitivity.deselect_all()
 
-# updates all buttons according to scene variable data: score, text, sound, difficulty
+# updates all buttons according to scene variable data: score, text, sound, sensitivity
 func update_all_buttons():
 	for i in data.score_modifiers.size():
 		update_button(i, data.all_data["score_modifiers"], score_display)
@@ -143,4 +143,4 @@ func update_all_buttons():
 		update_button(i, data.all_data["text_modifiers"], text)
 	for i in data.sound_modifiers.size():
 		update_button(i, data.all_data["sound_modifiers"], sound)
-	update_difficulty_button()
+	update_sensitivity_button()

@@ -3174,5 +3174,12 @@ text = "Reset Stats"
 
 [node name="Data" parent="." instance=ExtResource("3_6rvnk")]
 
+[node name="Score_Display" type="RichTextLabel" parent="."]
+offset_left = 37.0
+offset_top = 98.0
+offset_right = 989.0
+offset_bottom = 563.0
+fit_content = true
+
 [connection signal="pressed" from="Menu_button" to="." method="_on_menu_button_pressed"]
 [connection signal="pressed" from="Clear_stats" to="." method="_on_clear_stats_pressed"]
