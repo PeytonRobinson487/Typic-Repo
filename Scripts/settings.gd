@@ -59,6 +59,7 @@ func _on_reset_settings_pressed() -> void:
 	data.reset_settings()
 	update_all_buttons()
 
+
 ## settings buttons --------------------------------------------------------------------------------
 # score list
 # changes the scores displayed - descritpion found in data.gd - using the clicked item index.
@@ -101,7 +102,7 @@ func _on_sensitivity_item_clicked(index, at_position, mouse_button_index):
 # sound
 # changes the sound options array - description found in data.gd - using the cilcked item index
 func _on_sound_item_clicked(index, at_position, mouse_button_index):
-	data.sound_modifiers[index] = !data.sound_modifiers[index]
+	data.all_data["sound_modifiers"][index] = !data.all_data["sound_modifiers"][index]
 	update_button(index, data.sound_modifiers, sound)
 
 
@@ -109,8 +110,7 @@ func _on_sound_item_clicked(index, at_position, mouse_button_index):
 # updates either score, sound, or text modifier buttons
 func update_button(index: int, option_array: Array, item_list: ItemList) -> void:
 	# colors
-	var button_state: bool = option_array[index]
-	if (button_state):
+	if (option_array[index]):
 		item_list.set_item_custom_fg_color(index, COLOR_ON)
 	else:
 		item_list.set_item_custom_fg_color(index, COLOR_OFF)
