@@ -3208,6 +3208,8 @@ script = SubResource("GDScript_om5xk")
 
 [node name="Data" parent="Scripts" instance=ExtResource("6_8tk0y")]
 
+[node name="Graphics" type="Node" parent="."]
+
 [connection signal="focus_exited" from="Text/user_input" to="." method="_on_user_input_focus_exited"]
 [connection signal="text_changed" from="Text/user_input" to="." method="_on_user_input_text_changed"]
 [connection signal="pressed" from="Buttons/Button" to="." method="_exit_game"]
