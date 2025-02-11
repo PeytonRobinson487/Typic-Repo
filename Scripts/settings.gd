@@ -110,6 +110,7 @@ func _on_sound_item_clicked(index, at_position, mouse_button_index):
 # updates either score, sound, or text modifier buttons
 func update_button(index: int, option_array: Array, item_list: ItemList) -> void:
 	# colors
+	print(index)
 	if (option_array[index]):
 		item_list.set_item_custom_fg_color(index, COLOR_ON)
 	else:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cka8ktym7dsif"]
+[gd_scene load_steps=21 format=3 uid="uid://cka8ktym7dsif"]
 
 [ext_resource type="Script" path="res://Scripts/settings.gd" id="1_mpqgs"]
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_tloef"]
@@ -3147,6 +3147,48 @@ texture = ExtResource("1_tloef")
 [sub_resource type="TileSet" id="TileSet_msg1l"]
 sources/0 = SubResource("TileSetAtlasSource_mfbhy")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c6uce"]
+bg_color = Color(0.338, 0.4927, 0.52, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gaj08"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qcwbo"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_erdkf"]
+bg_color = Color(0.198, 0.2881, 0.3, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ti3i3"]
+bg_color = Color(0.3168, 0.45552, 0.48, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfbiv"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xrokg"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hhtnf"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1gwk"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xh25s"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1efgo"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7xru"]
+bg_color = Color(0.337255, 0.494118, 0.521569, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mfssx"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38ewq"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
 [node name="Settings" type="Node2D"]
 script = ExtResource("1_mpqgs")
 
@@ -3172,47 +3214,56 @@ layer_0/tile_data = PackedInt32Array(0, 0, 1610612736, 65536, 0, 1610612736, 131
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(574, 324)
 
-[node name="Node" type="Node" parent="."]
+[node name="Buttons" type="Node" parent="."]
 
-[node name="menu_button" type="Button" parent="Node"]
-offset_left = 1079.0
-offset_top = 17.0
-offset_right = 1132.0
-offset_bottom = 48.0
+[node name="menu_button" type="Button" parent="Buttons"]
+offset_left = 1048.0
+offset_top = 32.0
+offset_right = 1101.0
+offset_bottom = 63.0
+theme_override_styles/hover = SubResource("StyleBoxFlat_c6uce")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gaj08")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qcwbo")
 text = "Menu"
 
-[node name="Score Display" type="ItemList" parent="Node"]
-offset_left = 121.0
-offset_top = 109.0
-offset_right = 368.0
-offset_bottom = 279.0
+[node name="Score Display" type="ItemList" parent="Buttons"]
+offset_left = 41.0
+offset_top = 430.0
+offset_right = 288.0
+offset_bottom = 592.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_erdkf")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_ti3i3")
 select_mode = 1
 auto_height = true
 item_count = 6
-item_0/text = "Total Score"
-item_1/text = "Correct Score"
-item_2/text = "Missed Score"
-item_3/text = "Accuracy"
-item_4/text = "Score Streak"
-item_5/text = "Hard Characters"
+item_0/text = " Total Score"
+item_1/text = " Correct Score"
+item_2/text = " Missed Score"
+item_3/text = " Accuracy"
+item_4/text = " Score Streak"
+item_5/text = " Hard Characters"
 
-[node name="Sensitivity" type="ItemList" parent="Node"]
-offset_left = 678.0
-offset_top = 109.0
-offset_right = 855.0
-offset_bottom = 225.0
+[node name="Sensitivity" type="ItemList" parent="Buttons"]
+offset_left = 319.0
+offset_top = 430.0
+offset_right = 566.0
+offset_bottom = 546.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_mfbiv")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_xrokg")
 auto_height = true
 item_count = 4
-item_0/text = "Low"
-item_1/text = "Medium"
-item_2/text = "High"
-item_3/text = "Delicate"
+item_0/text = " Low"
+item_1/text = " Medium"
+item_2/text = " High"
+item_3/text = " Delicate"
 
-[node name="Text" type="ItemList" parent="Node"]
-offset_left = 678.0
-offset_top = 410.0
-offset_right = 926.0
-offset_bottom = 526.0
+[node name="Text" type="ItemList" parent="Buttons"]
+offset_left = 856.0
+offset_top = 430.0
+offset_right = 1103.0
+offset_bottom = 546.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hhtnf")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_e1gwk")
 select_mode = 1
 auto_height = true
 item_count = 4
@@ -3221,29 +3272,68 @@ item_1/text = "Uppercase Characters"
 item_2/text = "Numbers"
 item_3/text = "Symbols"
 
-[node name="Sound" type="ItemList" parent="Node"]
-offset_left = 121.0
-offset_top = 410.0
-offset_right = 429.0
-offset_bottom = 472.0
+[node name="Sound" type="ItemList" parent="Buttons"]
+offset_left = 589.0
+offset_top = 430.0
+offset_right = 836.0
+offset_bottom = 492.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_xh25s")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_1efgo")
 select_mode = 1
 auto_height = true
 item_count = 2
 item_0/text = "Music"
 item_1/text = "Sound Effects"
 
-[node name="Reset_settings" type="Button" parent="Node"]
-offset_left = 28.0
-offset_top = 17.0
-offset_right = 145.0
-offset_bottom = 48.0
+[node name="Reset_settings" type="Button" parent="Buttons"]
+offset_left = 41.0
+offset_top = 32.0
+offset_right = 158.0
+offset_bottom = 63.0
+theme_override_styles/hover = SubResource("StyleBoxFlat_s7xru")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mfssx")
+theme_override_styles/normal = SubResource("StyleBoxFlat_38ewq")
 text = "Reset Settings"
+
+[node name="Buttons text" type="Node" parent="Buttons"]
+
+[node name="Label" type="Label" parent="Buttons/Buttons text"]
+offset_left = 103.0
+offset_top = 396.0
+offset_right = 222.0
+offset_bottom = 419.0
+text = "Displayed Stats"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Buttons/Buttons text"]
+offset_left = 369.0
+offset_top = 396.0
+offset_right = 514.0
+offset_bottom = 419.0
+text = "Mistake Sensitivity"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Buttons/Buttons text"]
+offset_left = 648.0
+offset_top = 396.0
+offset_right = 767.0
+offset_bottom = 419.0
+text = "Sound"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Buttons/Buttons text"]
+offset_left = 917.0
+offset_top = 396.0
+offset_right = 1036.0
+offset_bottom = 419.0
+text = "Character Type"
+horizontal_alignment = 1
 
 [node name="Data" parent="." instance=ExtResource("3_car1x")]
 
-[connection signal="pressed" from="Node/menu_button" to="." method="_on_menu_button_pressed"]
-[connection signal="multi_selected" from="Node/Score Display" to="." method="_on_score_display_multi_selected"]
-[connection signal="item_clicked" from="Node/Sensitivity" to="." method="_on_sensitivity_item_clicked"]
-[connection signal="item_clicked" from="Node/Text" to="." method="_on_text_item_clicked"]
-[connection signal="item_clicked" from="Node/Sound" to="." method="_on_sound_item_clicked"]
-[connection signal="pressed" from="Node/Reset_settings" to="." method="_on_reset_settings_pressed"]
+[connection signal="pressed" from="Buttons/menu_button" to="." method="_on_menu_button_pressed"]
+[connection signal="multi_selected" from="Buttons/Score Display" to="." method="_on_score_display_multi_selected"]
+[connection signal="item_clicked" from="Buttons/Sensitivity" to="." method="_on_sensitivity_item_clicked"]
+[connection signal="item_clicked" from="Buttons/Text" to="." method="_on_text_item_clicked"]
+[connection signal="item_clicked" from="Buttons/Sound" to="." method="_on_sound_item_clicked"]
+[connection signal="pressed" from="Buttons/Reset_settings" to="." method="_on_reset_settings_pressed"]

@@ -34,11 +34,11 @@ func _on_user_input_text_submitted(new_text: String) -> void:
 
 
 # changes placeholder text if the user types
-func _on_user_input_text_changed(new_text: String) -> void:
+func _on_user_input_text_changed(_new_text: String) -> void:
 	user_input.placeholder_text = "Type the page here"
 
 
-func _on_page_list_item_clicked(index, at_position, mouse_button_index):
+func _on_page_list_item_clicked(index, _at_position, _mouse_button_index):
 	match index:
 		0: get_tree().change_scene_to_file("res://Scenes/game.tscn")
 		1: get_tree().change_scene_to_file("res://Scenes/settings.tscn")

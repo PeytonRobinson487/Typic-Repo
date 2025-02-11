@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://b7sdx3ncibqyn"]
+[gd_scene load_steps=7 format=3 uid="uid://b7sdx3ncibqyn"]
 
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_524yi"]
 [ext_resource type="Script" path="res://Scripts/score.gd" id="1_544m1"]
+[ext_resource type="Texture2D" uid="uid://cp6kor85dmgu" path="res://Assets/Graphics/Score Background.png" id="2_uh63l"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="3_6rvnk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tk1he"]
@@ -3149,7 +3150,19 @@ sources/0 = SubResource("TileSetAtlasSource_tk1he")
 [node name="Score" type="Node2D"]
 script = ExtResource("1_544m1")
 
+[node name="Graphics" type="Node" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="Graphics"]
+z_index = -3
+offset_left = -6.0
+offset_top = -3.0
+offset_right = 1158.0
+offset_bottom = 652.0
+texture = ExtResource("2_uh63l")
+expand_mode = 1
+
 [node name="TileMap" type="TileMap" parent="."]
+visible = false
 tile_set = SubResource("TileSet_8p57c")
 format = 2
 layer_0/z_index = -3

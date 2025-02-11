@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://dv4owd6fih1nl"]
+[gd_scene load_steps=13 format=3 uid="uid://dv4owd6fih1nl"]
 
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_rwkpf"]
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_tjocx"]
@@ -3146,6 +3146,33 @@ texture = ExtResource("1_tjocx")
 [sub_resource type="TileSet" id="TileSet_l58wr"]
 sources/0 = SubResource("TileSetAtlasSource_gco5y")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jeati"]
+content_margin_left = 10.0
+bg_color = Color(0.2613, 0.39, 0.379275, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5gr3"]
+bg_color = Color(0.258824, 0.388235, 0.376471, 0.392157)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2uqj"]
+bg_color = Color(0.2574, 0.39, 0.37453, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ud2gs"]
+bg_color = Color(0.4209, 0.584787, 0.61, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8tt5j"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ehxld"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v5q5v"]
+
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_rwkpf")
 
@@ -3177,44 +3204,57 @@ anchors_preset = -1
 anchor_left = -0.0460069
 anchor_right = -0.0460069
 offset_left = 107.0
-offset_top = 273.0
+offset_top = 269.0
 offset_right = 386.0
-offset_bottom = 304.0
+offset_bottom = 300.0
+theme_override_constants/caret_width = 2
+theme_override_styles/focus = SubResource("StyleBoxFlat_jeati")
+theme_override_styles/normal = SubResource("StyleBoxFlat_s5gr3")
 placeholder_text = "Type the page here"
+caret_blink = true
 metadata/_edit_use_anchors_ = true
 
 [node name="page list" type="ItemList" parent="Buttons"]
+anchors_preset = -1
+anchor_bottom = -0.0123457
 offset_left = 54.0
-offset_top = 325.0
+offset_top = 324.0
 offset_right = 282.0
-offset_bottom = 441.0
+offset_bottom = 440.0
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/panel = SubResource("StyleBoxFlat_n2uqj")
+theme_override_styles/hovered = SubResource("StyleBoxFlat_ud2gs")
 allow_rmb_select = true
 allow_search = false
 auto_height = true
 item_count = 4
-item_0/text = "Play"
+item_0/text = " Play"
 item_0/selectable = false
-item_1/text = "Settings"
+item_1/text = " Settings"
 item_1/selectable = false
-item_2/text = "Score"
+item_2/text = " Score"
 item_2/selectable = false
-item_3/text = "Quit"
+item_3/text = " Quit"
 item_3/selectable = false
 metadata/_edit_use_anchors_ = true
 
 [node name="Typic editable title" type="TextEdit" parent="Buttons"]
 anchors_preset = -1
 anchor_left = -0.391493
-anchor_right = 0.386285
+anchor_right = 0.296875
 offset_left = 505.0
 offset_top = 45.0
 offset_right = 810.0
 offset_bottom = 170.0
+mouse_force_pass_scroll_events = false
 theme_override_colors/font_color = Color(0.5561, 0.83, 0.68392, 1)
 theme_override_font_sizes/font_size = 80
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8tt5j")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_ehxld")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_v5q5v")
 text = "Typic"
 placeholder_text = "Typic"
+scroll_past_end_of_file = true
 metadata/_edit_use_anchors_ = true
 
 [connection signal="text_changed" from="Buttons/user_input" to="." method="_on_user_input_text_changed"]
