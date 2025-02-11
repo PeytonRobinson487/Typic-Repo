@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dxgssgxh3ndy4"
+path="res://.godot/imported/Lukrembo - Biscuit (freetouse.com).mp3-479a8f9e66d72cd2f95c1e01ede8d38a.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Lukrembo - Biscuit (freetouse.com).mp3"
+dest_files=["res://.godot/imported/Lukrembo - Biscuit (freetouse.com).mp3-479a8f9e66d72cd2f95c1e01ede8d38a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://c7yxdtdny4i2u"
+path="res://.godot/imported/Lukrembo - Butter (freetouse.com).mp3-52b7e21002e6e29c03345c4e136f068c.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Lukrembo - Butter (freetouse.com).mp3"
+dest_files=["res://.godot/imported/Lukrembo - Butter (freetouse.com).mp3-52b7e21002e6e29c03345c4e136f068c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

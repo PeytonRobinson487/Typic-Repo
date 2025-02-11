@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://8560vq5163mn"
+path="res://.godot/imported/Lukrembo - Imagine (freetouse.com).mp3-85a0cef2ae81e0a9b7e04ea3a8a483d8.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Lukrembo - Imagine (freetouse.com).mp3"
+dest_files=["res://.godot/imported/Lukrembo - Imagine (freetouse.com).mp3-85a0cef2ae81e0a9b7e04ea3a8a483d8.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

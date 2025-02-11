@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cpk3asdgx0c7j"
+path="res://.godot/imported/Lukrembo - Onion (freetouse.com).mp3-6780d181d6a57740a1343d0ecdd15ddb.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Lukrembo - Onion (freetouse.com).mp3"
+dest_files=["res://.godot/imported/Lukrembo - Onion (freetouse.com).mp3-6780d181d6a57740a1343d0ecdd15ddb.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

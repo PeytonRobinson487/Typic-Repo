@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dg47w55l504do"
+path="res://.godot/imported/Psyqui - Start Up feat. Such.mp3-8aa4be88b7d75cf497405cf9d07894d2.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/Psyqui - Start Up feat. Such.mp3"
+dest_files=["res://.godot/imported/Psyqui - Start Up feat. Such.mp3-8aa4be88b7d75cf497405cf9d07894d2.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
