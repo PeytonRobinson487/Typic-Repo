@@ -3,6 +3,10 @@ extends AudioStreamPlayer
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	# choose a random song
+	# Also add random song picker in settings
+	
+	
 	pass # Replace with function body.
 
 
