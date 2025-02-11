@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://cr0w3l4tv0w04"]
+[gd_scene load_steps=7 format=3 uid="uid://cr0w3l4tv0w04"]
 
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_1186q"]
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_ech1o"]
 [ext_resource type="PackedScene" uid="uid://61ft10y0nqei" path="res://Scenes/text_maker.tscn" id="3_dy8h3"]
-[ext_resource type="PackedScene" uid="uid://cx84x3wbxbf4m" path="res://Scenes/player_handler.tscn" id="4_lktuf"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="6_8tk0y"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vd7kh"]
@@ -3148,8 +3147,6 @@ texture = ExtResource("1_1186q")
 [sub_resource type="TileSet" id="TileSet_b02t8"]
 sources/0 = SubResource("TileSetAtlasSource_vd7kh")
 
-[sub_resource type="GDScript" id="GDScript_om5xk"]
-
 [node name="Game" type="Node2D"]
 script = ExtResource("1_ech1o")
 
@@ -3202,9 +3199,6 @@ offset_bottom = 47.0
 text = "Menu"
 
 [node name="Scripts" type="Node" parent="."]
-
-[node name="PlayerHandler" parent="Scripts" instance=ExtResource("4_lktuf")]
-script = SubResource("GDScript_om5xk")
 
 [node name="Data" parent="Scripts" instance=ExtResource("6_8tk0y")]
 

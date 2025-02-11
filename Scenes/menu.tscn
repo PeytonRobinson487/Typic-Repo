@@ -3216,6 +3216,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="page list" type="ItemList" parent="Buttons"]
 anchors_preset = -1
+anchor_top = -0.0123457
 anchor_bottom = -0.0123457
 offset_left = 54.0
 offset_top = 324.0

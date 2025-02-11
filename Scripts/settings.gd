@@ -9,28 +9,29 @@ extends Node2D
 # 1 - medium
 # 2 - hard
 # 3 - pro
-@onready var sensitivity: ItemList = $Node/Sensitivity
+@onready var sensitivity: ItemList = $Buttons/Sensitivity
+
 
 # 0 - lowercase
 # 1 - uppercase
 # 2 - numbers
 # 3 - symbols
-@onready var text: ItemList = $Node/Text
+@onready var text: ItemList = $Buttons/Text
 
 # 0 - Music
 # 1 - Sound
-@onready var sound: ItemList = $Node/Sound
+@onready var sound: ItemList = $Buttons/Sound
 
 # 0 - current char
 # 1 - missed char
 # 2 - correct char
 # 3 - hard char
 # 4 - Accuracy
-@onready var score_display: ItemList = $"Node/Score Display"
+@onready var score_display: ItemList = $"Buttons/Score Display"
 
 
 ## other variables
-@onready var data = $Data
+@onready var data: Node2D = $Data
 
 
 ## Color
@@ -63,13 +64,13 @@ func _on_reset_settings_pressed() -> void:
 ## settings buttons --------------------------------------------------------------------------------
 # score list
 # changes the scores displayed - descritpion found in data.gd - using the clicked item index.
-func _on_score_display_multi_selected(index: int, selected: bool) -> void:
+func _on_score_display_multi_selected(index: int, _selected: bool) -> void:
 	data.all_data["score_modifiers"][index] = !data.all_data["score_modifiers"][index]
 	update_button(index, data.all_data["score_modifiers"], score_display)
 
 # text
 # changes the text modifier array - description found in data.gd - using the clicked item index.
-func _on_text_item_clicked(index, at_position, mouse_button_index):
+func _on_text_item_clicked(index, _at_position, _mouse_button_index):
 	var text_mods: Array = data.all_data["text_modifiers"]
 	
 	# prevent the player from turning all options off
@@ -90,7 +91,7 @@ func _on_text_item_clicked(index, at_position, mouse_button_index):
 
 # difficulty
 # changes the difficulty using the clicked item index.
-func _on_sensitivity_item_clicked(index, at_position, mouse_button_index):
+func _on_sensitivity_item_clicked(index, _at_position, _mouse_button_index):
 	match index:
 		0: data.all_data["sensitivity"] = data.Sensitivity.LOW
 		1: data.all_data["sensitivity"] = data.Sensitivity.MEDIUM
@@ -101,9 +102,9 @@ func _on_sensitivity_item_clicked(index, at_position, mouse_button_index):
 
 # sound
 # changes the sound options array - description found in data.gd - using the cilcked item index
-func _on_sound_item_clicked(index, at_position, mouse_button_index):
+func _on_sound_item_clicked(index, _at_position, _mouse_button_index):
 	data.all_data["sound_modifiers"][index] = !data.all_data["sound_modifiers"][index]
-	update_button(index, data.sound_modifiers, sound)
+	update_button(index, data.all_data["sound_modifiers"], sound)
 
 
 ## Button colors ---------------------------------------------------------------
@@ -135,6 +136,7 @@ func update_sensitivity_button() -> void:
 	# removes user focus
 	sensitivity.set_focus_mode(0)
 	sensitivity.deselect_all()
+
 
 # updates all buttons according to scene variable data: score, text, sound, sensitivity
 func update_all_buttons():
