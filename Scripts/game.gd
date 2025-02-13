@@ -1,14 +1,22 @@
 extends Node2D
 
+# buttons
 @onready var user_input = $Text/user_input
 @onready var text_maker = $Text/TextMaker
-@onready var data: Node2D = $Scripts/Data
 @onready var score_display: RichTextLabel = $"Text/Score Display"
-@onready var background_music: Node2D = $Scripts/AudioManager
+
+# data
+@onready var data: Node2D = $Data
+
+# sound
+@onready var background_music: Node2D = $AudioManager
+@onready var light_click: AudioStreamPlayer = $"Sound Effects/light click"
+
+# animations
+@onready var scene_transition: Node2D = $SceneTransition
 
 
 ## Variables ---------------------------------------------------------------------------------------
-
 var total_score: int = 0
 var current_accuracy: float = 100.0
 var current_wrong: int = 0
@@ -16,33 +24,39 @@ var current_correct: int = 0
 var current_streak: int = 0
 var current_longest_streak: int = 0
 
+
 ## Functions ---------------------------------------------------------------------------------------
 # initialization
 func _ready() -> void:
+	scene_transition.scene_fade_in()
+	
 	data.load_data()
-	
-	background_music.set_volume(0)
-	background_music.set_song(data.all_data["current_song"], data)
-	background_music.set_volume(data.all_data["current_volume"])
-	
 	text_maker.text = text_maker.generate_text(24, data)
 	display_stats()
 	user_input.grab_focus()
+	
+	background_music.set_song(data.all_data["current_song"], data)
+	background_music.set_volume(data.all_data["current_volume"])
 
 
 ## menu button
 # exit to the home page
 func _exit_game() -> void:
+	scene_transition.scene_fade_out()
+	
 	# update more data variables
-	# update average accuracy
 	if (data.all_data["total_wrong"] > 0):
 		data.all_data["average_accuracy"] = (float(data.all_data["total_correct"]) / float(data.all_data["total_score"])) * 100.0
-	
 	data.update_level()
-	
 	data.all_data["playback_pos"] = background_music.get_playback_pos()
-	
 	data.save_data()
+	
+	if (data.all_data["sound_modifiers"][1]):
+		light_click.pitch_scale = randf() / 10 + 0.95
+		light_click.play(0.1)
+	# wait for scene transition animation to finish
+	await get_tree().create_timer(scene_transition.WAIT_TIME).timeout
+	
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 

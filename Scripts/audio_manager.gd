@@ -29,7 +29,7 @@ func set_song(new_song: String, data) -> void:
 		return
 	elif (data.all_data["current_song"] == new_song):
 		bgm.stream = load(new_song)
-		bgm.play(data.all_data["playback_pos"] + 0.17)
+		bgm.play(data.all_data["playback_pos"] + 0.2)
 		return
 	
 	bgm.stop()

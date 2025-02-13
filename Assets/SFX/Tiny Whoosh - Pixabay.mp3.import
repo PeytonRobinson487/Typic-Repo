@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ckxaa2gqnrpyq"
+path="res://.godot/imported/Tiny Whoosh - Pixabay.mp3-128a9c78f23568bff79edec9123b0541.mp3str"
+
+[deps]
+
+source_file="res://Assets/SFX/Tiny Whoosh - Pixabay.mp3"
+dest_files=["res://.godot/imported/Tiny Whoosh - Pixabay.mp3-128a9c78f23568bff79edec9123b0541.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

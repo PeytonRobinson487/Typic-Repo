@@ -1,10 +1,13 @@
-[gd_scene load_steps=50 format=3 uid="uid://cka8ktym7dsif"]
+[gd_scene load_steps=53 format=3 uid="uid://cka8ktym7dsif"]
 
 [ext_resource type="Script" path="res://Scripts/settings.gd" id="1_mpqgs"]
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_tloef"]
 [ext_resource type="Texture2D" uid="uid://brmxuk7mvlhoq" path="res://Assets/Graphics/Settings Background.png" id="2_dstiu"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="3_car1x"]
+[ext_resource type="AudioStream" uid="uid://c4f0jqwuf2nv8" path="res://Assets/SFX/light click - 666HeroHero.mp3" id="4_pfun5"]
+[ext_resource type="AudioStream" uid="uid://beiogaefep5g8" path="res://Assets/SFX/mechanical keyboard - freesound_community.mp3" id="5_h453x"]
 [ext_resource type="PackedScene" uid="uid://cjnhkwa8nmm36" path="res://Scenes/Audio Manager.tscn" id="5_qq0c4"]
+[ext_resource type="PackedScene" uid="uid://dfngbuwlbyse1" path="res://Scenes/scene_transition.tscn" id="6_0wjb1"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mfbhy"]
 texture = ExtResource("1_tloef")
@@ -3514,9 +3517,19 @@ offset_bottom = 397.0
 text = "Character Type"
 horizontal_alignment = 1
 
+[node name="Sound Effects" type="Node" parent="."]
+
+[node name="light click" type="AudioStreamPlayer" parent="Sound Effects"]
+stream = ExtResource("4_pfun5")
+
+[node name="select button" type="AudioStreamPlayer" parent="Sound Effects"]
+stream = ExtResource("5_h453x")
+
 [node name="Data" parent="." instance=ExtResource("3_car1x")]
 
 [node name="background_music" parent="." instance=ExtResource("5_qq0c4")]
+
+[node name="SceneTransition" parent="." instance=ExtResource("6_0wjb1")]
 
 [connection signal="pressed" from="Buttons/menu_button" to="." method="_on_menu_button_pressed"]
 [connection signal="multi_selected" from="Buttons/Score Display" to="." method="_on_score_display_multi_selected"]

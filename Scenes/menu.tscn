@@ -1,10 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://dv4owd6fih1nl"]
+[gd_scene load_steps=19 format=3 uid="uid://dv4owd6fih1nl"]
 
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_rwkpf"]
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_tjocx"]
 [ext_resource type="Texture2D" uid="uid://ckumxfk77cfnw" path="res://Assets/Graphics/Homepage BG.png" id="3_1od3m"]
 [ext_resource type="PackedScene" uid="uid://cjnhkwa8nmm36" path="res://Scenes/Audio Manager.tscn" id="4_o4h8n"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="5_hp4e0"]
+[ext_resource type="AudioStream" uid="uid://c4f0jqwuf2nv8" path="res://Assets/SFX/light click - 666HeroHero.mp3" id="6_fcwk8"]
+[ext_resource type="AudioStream" uid="uid://beiogaefep5g8" path="res://Assets/SFX/mechanical keyboard - freesound_community.mp3" id="7_najf5"]
+[ext_resource type="AudioStream" uid="uid://bj3gddr6ec5ev" path="res://Assets/SFX/fire-in-the-hole-geometry-dash.mp3" id="8_wjfsw"]
+[ext_resource type="PackedScene" uid="uid://dfngbuwlbyse1" path="res://Scenes/scene_transition.tscn" id="9_vfxmy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gco5y"]
 texture = ExtResource("1_tjocx")
@@ -3260,9 +3264,24 @@ placeholder_text = "Typic"
 scroll_past_end_of_file = true
 metadata/_edit_use_anchors_ = true
 
+[node name="Sound Effects" type="Node" parent="."]
+
+[node name="Click" type="AudioStreamPlayer" parent="Sound Effects"]
+stream = ExtResource("6_fcwk8")
+volume_db = -10.0
+
+[node name="Text_submit" type="AudioStreamPlayer" parent="Sound Effects"]
+stream = ExtResource("7_najf5")
+
+[node name="Fire in the hole" type="AudioStreamPlayer" parent="Sound Effects"]
+stream = ExtResource("8_wjfsw")
+max_polyphony = 5
+
 [node name="AudioManager" parent="." instance=ExtResource("4_o4h8n")]
 
 [node name="Data" parent="." instance=ExtResource("5_hp4e0")]
+
+[node name="SceneTransition" parent="." instance=ExtResource("9_vfxmy")]
 
 [connection signal="text_changed" from="Buttons/user_input" to="." method="_on_user_input_text_changed"]
 [connection signal="text_submitted" from="Buttons/user_input" to="." method="_on_user_input_text_submitted"]

@@ -43,9 +43,16 @@ extends Node2D
 @onready var score_display: ItemList = $"Buttons/Score Display"
 
 
-## other variables
+# data
 @onready var data: Node2D = $Data
+
+# sound
 @onready var background_music: Node2D = $background_music
+@onready var light_click: AudioStreamPlayer = $"Sound Effects/light click"
+@onready var select_button: AudioStreamPlayer = $"Sound Effects/select button"
+
+# animations
+@onready var scene_transition: Node2D = $SceneTransition
 
 
 ## Color
@@ -56,27 +63,36 @@ const COLOR_OFF: Color = Color("MAROON")
 ### FUNCTIONS --------------------------------------------------------------------------------------
 # initializer
 func _ready():
-	data.load_data()
+	scene_transition.scene_fade_in()
 	
-	background_music.set_volume(0)
+	data.load_data()
+	update_all_buttons()
+	
 	background_music.set_song(data.all_data["current_song"], data)
 	background_music.set_volume(data.all_data["current_volume"])
-	
-	update_all_buttons()
 
 
 # menu button
 # brings the player back to the menu page
 func _on_menu_button_pressed() -> void:
+	scene_transition.scene_fade_out()
+	
 	data.all_data["playback_pos"] = background_music.get_playback_pos()
 	
 	data.save_data()
+	
+	play_sound(light_click)
+	# wait for scene transition animation to finish
+	await get_tree().create_timer(scene_transition.WAIT_TIME).timeout
+	
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 # resets settings
 func _on_reset_settings_pressed() -> void:
 	data.reset_settings()
 	_ready()
+	
+	play_sound(light_click)
 
 
 ## settings buttons --------------------------------------------------------------------------------
@@ -85,6 +101,8 @@ func _on_reset_settings_pressed() -> void:
 func _on_score_display_multi_selected(index: int, _selected: bool) -> void:
 	data.all_data["score_modifiers"][index] = !data.all_data["score_modifiers"][index]
 	update_button(index, data.all_data["score_modifiers"], score_display)
+	
+	play_sound(select_button)
 
 # text
 # changes the text modifier array - description found in data.gd - using the clicked item index.
@@ -104,8 +122,9 @@ func _on_text_item_clicked(index, _at_position, _mouse_button_index):
 	text_mods[index] = !text_mods[index]
 	update_button(index, text_mods, text)
 	
-	# update data
 	data.all_data["text_modifiers"] = text_mods
+	
+	play_sound(select_button)
 
 # difficulty
 # changes the difficulty using the clicked item index.
@@ -129,6 +148,8 @@ func _on_sensitivity_item_clicked(index, _at_position, _mouse_button_index):
 	# removes user focus
 	sensitivity.set_focus_mode(0)
 	sensitivity.deselect_all()
+	
+	play_sound(select_button)
 
 ## sound buttons ---------------------------------------------------------------
 # song buttons
@@ -160,6 +181,8 @@ func update_song_button(index: int) -> void:
 	var new_song: String = data.SONGS[index]
 	background_music.set_song(new_song, data)
 	data.all_data["current_song"] = new_song
+	
+	play_sound(select_button)
 
 # music
 func _on_master_music_toggled(toggled_on: bool) -> void:
@@ -174,6 +197,8 @@ func _on_master_music_toggled(toggled_on: bool) -> void:
 		background_music.set_song(data.all_data["current_song"], data)
 	
 	master_music.focus_mode = Control.FOCUS_NONE
+	
+	play_sound(select_button)
 
 # random button is pressed
 func _on_choose_random_pressed() -> void:
@@ -181,6 +206,8 @@ func _on_choose_random_pressed() -> void:
 	background_music.set_song(new_song, data)
 	data.all_data["current_song"] = new_song
 	choose_random.focus_mode = Control.FOCUS_NONE
+	
+	play_sound(select_button)
 
 # volume slider
 func _on_volume_value_changed(value: float) -> void:
@@ -193,8 +220,13 @@ func _on_master_sound_toggled(toggled_on: bool) -> void:
 	
 	data.all_data["sound_modifiers"][1] = toggled_on
 	master_sound.focus_mode = Control.FOCUS_NONE
+	play_sound(select_button)
 
-
+# plays click sound
+func play_sound(sound: AudioStreamPlayer) -> void:
+	if (data.all_data["sound_modifiers"][1]):
+		sound.pitch_scale = randf() / 10 + 0.95
+		sound.play(0.1)
 
 
 

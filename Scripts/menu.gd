@@ -1,25 +1,40 @@
 extends Node2D
 
-
+# buttons
 @onready var user_input: LineEdit = $Buttons/user_input
 @onready var page_list = $"Buttons/page list"
-@onready var background_music: Node2D = $AudioManager
+
+# data
 @onready var data: Node2D = $Data
+
+# sound
+@onready var background_music: Node2D = $AudioManager
+@onready var click: AudioStreamPlayer = $"Sound Effects/Click"
+@onready var text_submit: AudioStreamPlayer = $"Sound Effects/Text_submit"
+@onready var fire_in_the_hole: AudioStreamPlayer = $"Sound Effects/Fire in the hole"
+
+# animations
+@onready var scene_transition: Node2D = $SceneTransition
 
 
 # init
 func _ready() -> void:
+	scene_transition.scene_fade_in()
+	
 	data.load_data()
 	user_input.grab_focus()
 	
-	background_music.set_volume(0)
 	background_music.set_song(data.all_data["current_song"], data)
 	background_music.set_volume(data.all_data["current_volume"])
 
 
 # user enters text
 func _on_user_input_text_submitted(new_text: String) -> void:
-	# main scenes
+	# sounds
+	if (data.all_data["sound_modifiers"][1]):
+		text_submit.pitch_scale = randf() / 10 + 0.95
+		text_submit.play(0.1)
+	
 	var two_letters: String = new_text.substr(0, 2).to_lower()
 	if (two_letters == "pl"):
 		_on_page_list_item_clicked(0, 0, 0)
@@ -30,7 +45,6 @@ func _on_user_input_text_submitted(new_text: String) -> void:
 	elif (two_letters == "qu"):
 		_on_page_list_item_clicked(3, 0, 0)
 	else:
-		# custom input
 		custom_input(new_text)
 
 # responds to various inputs from the user
@@ -87,6 +101,10 @@ func custom_input(new_text: String) -> void:
 		user_input.placeholder_text = ". . ."
 	elif (new_text == ":)"):
 		user_input.placeholder_text = "=]"
+	elif (new_text.substr(0, 4).to_lower() == "fire"):
+		if (data.all_data["sound_modifiers"][1]):
+			fire_in_the_hole.pitch_scale = randf() * 2 + 0.25
+			fire_in_the_hole.play()
 	else:
 		var rand: int = randi() % 13
 		if (rand >= 3):
@@ -107,6 +125,17 @@ func _on_user_input_text_changed(_new_text: String) -> void:
 
 
 func _on_page_list_item_clicked(index, _at_position, _mouse_button_index):
+	# sound effects
+	if (data.all_data["sound_modifiers"][1]):
+		click.pitch_scale = randf() / 10 + 0.95
+		click.volume_db = linear_to_db(2.0)
+		click.play(0.1)
+	
+	# page transition
+	scene_transition.scene_fade_out()
+	# wait for scene transition animation to finish
+	await get_tree().create_timer(scene_transition.WAIT_TIME).timeout
+	
 	data.all_data["playback_pos"] = background_music.get_playback_pos()
 	data.save_data()
 	match index:
