@@ -1,9 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://cka8ktym7dsif"]
+[gd_scene load_steps=50 format=3 uid="uid://cka8ktym7dsif"]
 
 [ext_resource type="Script" path="res://Scripts/settings.gd" id="1_mpqgs"]
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_tloef"]
 [ext_resource type="Texture2D" uid="uid://brmxuk7mvlhoq" path="res://Assets/Graphics/Settings Background.png" id="2_dstiu"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="3_car1x"]
+[ext_resource type="PackedScene" uid="uid://cjnhkwa8nmm36" path="res://Scenes/Audio Manager.tscn" id="5_qq0c4"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_mfbhy"]
 texture = ExtResource("1_tloef")
@@ -3174,12 +3175,6 @@ bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e1gwk"]
 bg_color = Color(0.317647, 0.454902, 0.478431, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xh25s"]
-bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1efgo"]
-bg_color = Color(0.317647, 0.454902, 0.478431, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7xru"]
 bg_color = Color(0.337255, 0.494118, 0.521569, 0.392157)
 
@@ -3187,6 +3182,96 @@ bg_color = Color(0.337255, 0.494118, 0.521569, 0.392157)
 bg_color = Color(0.317647, 0.454902, 0.478431, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_38ewq"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ytwy8"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_luoj0"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7mv6"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fe0lb"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1ii32"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tb5bp"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rhlu2"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ofcs2"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kptwp"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wos2q"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7y6b8"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4263a"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3cvbi"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wbbjj"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gyac3"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tta3f"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7u7fo"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kms37"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d1kbi"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x5qfq"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7f2fc"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ynxhq"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xtkxh"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ia5oy"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a281u"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7tuaa"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0g0g"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_62y4l"]
+bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hs1vw"]
+bg_color = Color(0.317647, 0.454902, 0.478431, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vb85c"]
 bg_color = Color(0.196078, 0.286275, 0.301961, 0.392157)
 
 [node name="Settings" type="Node2D"]
@@ -3217,9 +3302,9 @@ position = Vector2(574, 324)
 [node name="Buttons" type="Node" parent="."]
 
 [node name="menu_button" type="Button" parent="Buttons"]
-offset_left = 1048.0
+offset_left = 1033.0
 offset_top = 32.0
-offset_right = 1101.0
+offset_right = 1086.0
 offset_bottom = 63.0
 theme_override_styles/hover = SubResource("StyleBoxFlat_c6uce")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_gaj08")
@@ -3227,10 +3312,10 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_qcwbo")
 text = "Menu"
 
 [node name="Score Display" type="ItemList" parent="Buttons"]
-offset_left = 41.0
-offset_top = 430.0
-offset_right = 288.0
-offset_bottom = 592.0
+offset_left = 49.0
+offset_top = 408.0
+offset_right = 296.0
+offset_bottom = 570.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_erdkf")
 theme_override_styles/hovered = SubResource("StyleBoxFlat_ti3i3")
 select_mode = 1
@@ -3244,10 +3329,10 @@ item_4/text = " Score Streak"
 item_5/text = " Hard Characters"
 
 [node name="Sensitivity" type="ItemList" parent="Buttons"]
-offset_left = 319.0
-offset_top = 430.0
-offset_right = 566.0
-offset_bottom = 546.0
+offset_left = 327.0
+offset_top = 408.0
+offset_right = 574.0
+offset_bottom = 524.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_mfbiv")
 theme_override_styles/hovered = SubResource("StyleBoxFlat_xrokg")
 auto_height = true
@@ -3258,82 +3343,198 @@ item_2/text = " High"
 item_3/text = " Delicate"
 
 [node name="Text" type="ItemList" parent="Buttons"]
-offset_left = 856.0
-offset_top = 430.0
-offset_right = 1103.0
-offset_bottom = 546.0
+offset_left = 843.0
+offset_top = 408.0
+offset_right = 1090.0
+offset_bottom = 524.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_hhtnf")
 theme_override_styles/hovered = SubResource("StyleBoxFlat_e1gwk")
 select_mode = 1
 auto_height = true
 item_count = 4
-item_0/text = "Lowercase Characters"
-item_1/text = "Uppercase Characters"
-item_2/text = "Numbers"
-item_3/text = "Symbols"
-
-[node name="Sound" type="ItemList" parent="Buttons"]
-offset_left = 589.0
-offset_top = 430.0
-offset_right = 836.0
-offset_bottom = 492.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_xh25s")
-theme_override_styles/hovered = SubResource("StyleBoxFlat_1efgo")
-select_mode = 1
-auto_height = true
-item_count = 2
-item_0/text = "Music"
-item_1/text = "Sound Effects"
+item_0/text = " Lowercase Characters"
+item_1/text = " Uppercase Characters"
+item_2/text = " Numbers"
+item_3/text = " Symbols"
 
 [node name="Reset_settings" type="Button" parent="Buttons"]
-offset_left = 41.0
+offset_left = 49.0
 offset_top = 32.0
-offset_right = 158.0
+offset_right = 166.0
 offset_bottom = 63.0
 theme_override_styles/hover = SubResource("StyleBoxFlat_s7xru")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_mfssx")
 theme_override_styles/normal = SubResource("StyleBoxFlat_38ewq")
 text = "Reset Settings"
 
+[node name="Song control" type="ScrollContainer" parent="Buttons"]
+offset_left = 644.0
+offset_top = 499.0
+offset_right = 767.0
+offset_bottom = 600.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ytwy8")
+
+[node name="GridContainer" type="GridContainer" parent="Buttons/Song control"]
+layout_mode = 2
+
+[node name="Biscuit" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_luoj0")
+theme_override_styles/normal = SubResource("StyleBoxFlat_l7mv6")
+text = "Biscuit"
+
+[node name="Boba Tea" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_fe0lb")
+theme_override_styles/normal = SubResource("StyleBoxFlat_1ii32")
+text = "Boba Tea"
+
+[node name="Bread" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_tb5bp")
+theme_override_styles/normal = SubResource("StyleBoxFlat_rhlu2")
+text = "Bread"
+
+[node name="Butter" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_ofcs2")
+theme_override_styles/normal = SubResource("StyleBoxFlat_kptwp")
+text = "Butter"
+
+[node name="Chocolate" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_wos2q")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7y6b8")
+text = "Chocolate"
+
+[node name="Imagine" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_4263a")
+theme_override_styles/normal = SubResource("StyleBoxFlat_3cvbi")
+text = "Imagine"
+
+[node name="Marshmallow" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_wbbjj")
+theme_override_styles/normal = SubResource("StyleBoxFlat_gyac3")
+text = "Marshmallow"
+
+[node name="Onion" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_tta3f")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7u7fo")
+text = "Onion"
+
+[node name="Rose" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_kms37")
+theme_override_styles/normal = SubResource("StyleBoxFlat_d1kbi")
+text = "Rose"
+
+[node name="Sunset" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_x5qfq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7f2fc")
+text = "Sunset"
+
+[node name="Start Up" type="Button" parent="Buttons/Song control/GridContainer"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_ynxhq")
+theme_override_styles/normal = SubResource("StyleBoxFlat_xtkxh")
+text = "Start Up"
+
+[node name="Sound control" type="GridContainer" parent="Buttons"]
+offset_left = 601.0
+offset_top = 408.0
+offset_right = 836.0
+offset_bottom = 482.0
+columns = 2
+
+[node name="Master Music" type="CheckButton" parent="Buttons/Sound control"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_ia5oy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_a281u")
+text = " Music "
+
+[node name="Master Sound" type="CheckButton" parent="Buttons/Sound control"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_7tuaa")
+theme_override_styles/normal = SubResource("StyleBoxFlat_i0g0g")
+text = " Sound "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Buttons/Sound control"]
+layout_mode = 2
+
+[node name="Volume" type="Label" parent="Buttons/Sound control/VBoxContainer"]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_62y4l")
+text = "     Volume     "
+horizontal_alignment = 1
+
+[node name="volume" type="HSlider" parent="Buttons/Sound control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Choose Random" type="Button" parent="Buttons/Sound control"]
+layout_mode = 2
+theme_override_styles/hover = SubResource("StyleBoxFlat_hs1vw")
+theme_override_styles/normal = SubResource("StyleBoxFlat_vb85c")
+text = " Random Song "
+
 [node name="Buttons text" type="Node" parent="Buttons"]
 
 [node name="Label" type="Label" parent="Buttons/Buttons text"]
-offset_left = 103.0
-offset_top = 396.0
-offset_right = 222.0
-offset_bottom = 419.0
+offset_left = 111.0
+offset_top = 374.0
+offset_right = 230.0
+offset_bottom = 397.0
 text = "Displayed Stats"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="Buttons/Buttons text"]
-offset_left = 369.0
-offset_top = 396.0
-offset_right = 514.0
-offset_bottom = 419.0
+offset_left = 377.0
+offset_top = 374.0
+offset_right = 522.0
+offset_bottom = 397.0
 text = "Mistake Sensitivity"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="Buttons/Buttons text"]
-offset_left = 648.0
-offset_top = 396.0
-offset_right = 767.0
-offset_bottom = 419.0
+offset_left = 653.0
+offset_top = 374.0
+offset_right = 772.0
+offset_bottom = 397.0
 text = "Sound"
 horizontal_alignment = 1
 
 [node name="Label4" type="Label" parent="Buttons/Buttons text"]
-offset_left = 917.0
-offset_top = 396.0
-offset_right = 1036.0
-offset_bottom = 419.0
+offset_left = 904.0
+offset_top = 374.0
+offset_right = 1023.0
+offset_bottom = 397.0
 text = "Character Type"
 horizontal_alignment = 1
 
 [node name="Data" parent="." instance=ExtResource("3_car1x")]
 
+[node name="background_music" parent="." instance=ExtResource("5_qq0c4")]
+
 [connection signal="pressed" from="Buttons/menu_button" to="." method="_on_menu_button_pressed"]
 [connection signal="multi_selected" from="Buttons/Score Display" to="." method="_on_score_display_multi_selected"]
 [connection signal="item_clicked" from="Buttons/Sensitivity" to="." method="_on_sensitivity_item_clicked"]
 [connection signal="item_clicked" from="Buttons/Text" to="." method="_on_text_item_clicked"]
-[connection signal="item_clicked" from="Buttons/Sound" to="." method="_on_sound_item_clicked"]
 [connection signal="pressed" from="Buttons/Reset_settings" to="." method="_on_reset_settings_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Biscuit" to="." method="_on_biscuit_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Boba Tea" to="." method="_on_boba_tea_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Bread" to="." method="_on_bread_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Butter" to="." method="_on_butter_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Chocolate" to="." method="_on_chocolate_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Imagine" to="." method="_on_imagine_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Marshmallow" to="." method="_on_marshmallow_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Onion" to="." method="_on_onion_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Rose" to="." method="_on_rose_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Sunset" to="." method="_on_sunset_pressed"]
+[connection signal="pressed" from="Buttons/Song control/GridContainer/Start Up" to="." method="_on_start_up_pressed"]
+[connection signal="toggled" from="Buttons/Sound control/Master Music" to="." method="_on_master_music_toggled"]
+[connection signal="toggled" from="Buttons/Sound control/Master Sound" to="." method="_on_master_sound_toggled"]
+[connection signal="value_changed" from="Buttons/Sound control/VBoxContainer/volume" to="." method="_on_volume_value_changed"]
+[connection signal="pressed" from="Buttons/Sound control/Choose Random" to="." method="_on_choose_random_pressed"]

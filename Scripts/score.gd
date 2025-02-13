@@ -2,16 +2,25 @@ extends Node2D
 
 @onready var data: Node2D = $Data
 @onready var score_display: RichTextLabel = $Score_Display
+@onready var background_music: Node2D = $AudioManager
 
 
 ## -------------------------------------------------------------------------------------------------
 # initialization
 func _ready() -> void:
 	data.load_data()
+	
+	background_music.set_volume(0)
+	background_music.set_song(data.all_data["current_song"], data)
+	background_music.set_volume(data.all_data["current_volume"])
+	
 	display_stats()
 
 ## menu button
 func _on_menu_button_pressed() -> void:
+	data.all_data["playback_pos"] = background_music.get_playback_pos()
+	
+	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 # resets stats

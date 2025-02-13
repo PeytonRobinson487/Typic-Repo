@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b7sdx3ncibqyn"]
+[gd_scene load_steps=8 format=3 uid="uid://b7sdx3ncibqyn"]
 
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_524yi"]
 [ext_resource type="Script" path="res://Scripts/score.gd" id="1_544m1"]
 [ext_resource type="Texture2D" uid="uid://c2uc54qrto6pl" path="res://Assets/Graphics/Score Background.png" id="2_uh63l"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="3_6rvnk"]
+[ext_resource type="PackedScene" uid="uid://cjnhkwa8nmm36" path="res://Scenes/Audio Manager.tscn" id="5_kpfwm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tk1he"]
 texture = ExtResource("1_524yi")
@@ -3186,6 +3187,8 @@ offset_bottom = 53.0
 text = "Reset Stats"
 
 [node name="Data" parent="." instance=ExtResource("3_6rvnk")]
+
+[node name="AudioManager" parent="." instance=ExtResource("5_kpfwm")]
 
 [node name="Score_Display" type="RichTextLabel" parent="."]
 offset_left = 37.0

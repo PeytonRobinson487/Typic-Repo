@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://cr0w3l4tv0w04"]
+[gd_scene load_steps=9 format=3 uid="uid://cr0w3l4tv0w04"]
 
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_1186q"]
 [ext_resource type="Script" path="res://Scripts/game.gd" id="1_ech1o"]
 [ext_resource type="Texture2D" uid="uid://b4yp0whdsw0xo" path="res://Assets/Graphics/Game BG.png" id="2_6fse6"]
 [ext_resource type="PackedScene" uid="uid://61ft10y0nqei" path="res://Scenes/text_maker.tscn" id="3_dy8h3"]
 [ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="6_8tk0y"]
+[ext_resource type="PackedScene" uid="uid://cjnhkwa8nmm36" path="res://Scenes/Audio Manager.tscn" id="6_as0ji"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vd7kh"]
 texture = ExtResource("1_1186q")
@@ -3214,6 +3215,8 @@ text = "Menu"
 [node name="Scripts" type="Node" parent="."]
 
 [node name="Data" parent="Scripts" instance=ExtResource("6_8tk0y")]
+
+[node name="AudioManager" parent="Scripts" instance=ExtResource("6_as0ji")]
 
 [connection signal="focus_exited" from="Text/user_input" to="." method="_on_user_input_focus_exited"]
 [connection signal="text_changed" from="Text/user_input" to="." method="_on_user_input_text_changed"]

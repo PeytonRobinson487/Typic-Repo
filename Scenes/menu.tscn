@@ -1,8 +1,10 @@
-[gd_scene load_steps=13 format=3 uid="uid://dv4owd6fih1nl"]
+[gd_scene load_steps=15 format=3 uid="uid://dv4owd6fih1nl"]
 
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_rwkpf"]
 [ext_resource type="Texture2D" uid="uid://bgsol436aco7x" path="res://Assets/Graphics/0x0_jpg_75.jpg" id="1_tjocx"]
 [ext_resource type="Texture2D" uid="uid://ckumxfk77cfnw" path="res://Assets/Graphics/Homepage BG.png" id="3_1od3m"]
+[ext_resource type="PackedScene" uid="uid://cjnhkwa8nmm36" path="res://Scenes/Audio Manager.tscn" id="4_o4h8n"]
+[ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/data.tscn" id="5_hp4e0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gco5y"]
 texture = ExtResource("1_tjocx")
@@ -3210,7 +3212,7 @@ offset_bottom = 300.0
 theme_override_constants/caret_width = 2
 theme_override_styles/focus = SubResource("StyleBoxFlat_jeati")
 theme_override_styles/normal = SubResource("StyleBoxFlat_s5gr3")
-placeholder_text = "Type the page here"
+placeholder_text = " Type the page here"
 caret_blink = true
 metadata/_edit_use_anchors_ = true
 
@@ -3257,6 +3259,10 @@ text = "Typic"
 placeholder_text = "Typic"
 scroll_past_end_of_file = true
 metadata/_edit_use_anchors_ = true
+
+[node name="AudioManager" parent="." instance=ExtResource("4_o4h8n")]
+
+[node name="Data" parent="." instance=ExtResource("5_hp4e0")]
 
 [connection signal="text_changed" from="Buttons/user_input" to="." method="_on_user_input_text_changed"]
 [connection signal="text_submitted" from="Buttons/user_input" to="." method="_on_user_input_text_submitted"]

@@ -15,10 +15,6 @@ run/main_scene="res://Scenes/menu.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
-[autoload]
-
-BackgroundMusic="*res://Scenes/BackgroundMusic.tscn"
-
 [display]
 
 window/stretch/mode="canvas_items"

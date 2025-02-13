@@ -4,7 +4,8 @@ extends Node2D
 @onready var text_maker = $Text/TextMaker
 @onready var data: Node2D = $Scripts/Data
 @onready var score_display: RichTextLabel = $"Text/Score Display"
-@onready var player_handler: Node = $Scripts/PlayerHandler
+@onready var background_music: Node2D = $Scripts/AudioManager
+
 
 ## Variables ---------------------------------------------------------------------------------------
 
@@ -19,6 +20,11 @@ var current_longest_streak: int = 0
 # initialization
 func _ready() -> void:
 	data.load_data()
+	
+	background_music.set_volume(0)
+	background_music.set_song(data.all_data["current_song"], data)
+	background_music.set_volume(data.all_data["current_volume"])
+	
 	text_maker.text = text_maker.generate_text(24, data)
 	display_stats()
 	user_input.grab_focus()
@@ -33,6 +39,8 @@ func _exit_game() -> void:
 		data.all_data["average_accuracy"] = (float(data.all_data["total_correct"]) / float(data.all_data["total_score"])) * 100.0
 	
 	data.update_level()
+	
+	data.all_data["playback_pos"] = background_music.get_playback_pos()
 	
 	data.save_data()
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
