@@ -118,7 +118,6 @@ func custom_input(new_text: String) -> void:
 	
 	user_input.placeholder_text = " " + user_input.placeholder_text
 
-
 # changes placeholder text if the user types
 func _on_user_input_text_changed(_new_text: String) -> void:
 	user_input.placeholder_text = " Type the page here"
@@ -146,6 +145,8 @@ func _on_page_list_item_clicked(index, _at_position, _mouse_button_index):
 		2: 
 			get_tree().change_scene_to_file("res://Scenes/score.tscn")
 		3:
+			get_tree().change_scene_to_file("res://Scenes/credits.tscn")
+		4:
 			data.all_data["playback_pos"] = 0.0
 			data.save_data()
 			get_tree().quit()

@@ -127,7 +127,8 @@ func save_data() -> void:
 	var file = FileAccess.open(_save_path, FileAccess.WRITE)
 	for key in all_data:
 		file.store_var(all_data[key])
-	print("Data saved!")
+	file.close()
+	#print("Data saved!")
 
 # loads data
 func load_data() -> void:
@@ -144,7 +145,7 @@ func load_data() -> void:
 			if (typeof(value) == typeof(all_data[key])): all_data[key] = value
 	
 	file.close()
-	print("Data loaded!")
+	#print("Data loaded!")
 
 # prints all data
 func print_all_data() -> void:
