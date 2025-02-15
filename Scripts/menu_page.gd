@@ -145,11 +145,10 @@ func custom_input(new_text: String) -> void:
 		if (new_text.substr(0, key.length()).to_lower() == key):
 			var value: Array = CUSTOM_RESPONSE_NORMAL.get(key)
 			user_input.placeholder_text = value.pick_random()
+			return
 	
 	# special cases
-	if (new_text.substr(0, 5) == "TYPIC"):
-		user_input.placeholder_text = "YES. THIS IS TYPIC."
-	elif (new_text.length() == 0):
+	if (new_text.length() == 0):
 		var responses: Array = ["You did not even type anything.", "...", "..", ".", ""]
 		user_input.placeholder_text = responses.pick_random()
 	elif (new_text.substr(0, 1).to_lower() == "r"):
