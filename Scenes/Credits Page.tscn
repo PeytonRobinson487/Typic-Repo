@@ -111,7 +111,6 @@ libraries = {
 }
 
 [node name="Transition" type="ColorRect" parent="Graphics"]
-visible = false
 z_index = 10
 anchors_preset = 15
 anchor_right = 1.0
