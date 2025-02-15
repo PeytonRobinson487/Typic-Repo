@@ -167,7 +167,7 @@ func custom_input(new_text: String) -> void:
 		var responses: Array = ["FiRe In ThE hOlE!i!", "Fire in the hole!", "FIRE IN THE HOLE!", "fIrE iN tHe HoLei!i"]
 		user_input.placeholder_text = responses.pick_random()
 	else:
-		var responses: Array = ["Unkonwn page.", "What?", "Huh?", "Try again.", "What does that mean?", "Say what?", "???"]
+		var responses: Array = ["Unknown page.", "What?", "Huh?", "Try again.", "What does that mean?", "Say what?", "???"]
 		user_input.placeholder_text = responses.pick_random()
 	
 	user_input.placeholder_text = " " + user_input.placeholder_text
