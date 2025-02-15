@@ -150,7 +150,7 @@ text = "Game Creator: Peyton Robinson
 Game design: Peyton Robinson
 Programming: Peyton Robinson
 Artwork: Peyton Robinson
-Made with       4.3
+Made with       4.3 and 
 v1.0 - 2/15/2025"
 
 [node name="External Credits" type="Label" parent="Graphics/Text"]
@@ -252,6 +252,15 @@ offset_right = 432.0
 offset_bottom = 221.0
 theme_override_fonts/font = ExtResource("4_iw8i0")
 text = "freesound_community"
+
+[node name="Affinity Designer 2" type="LinkButton" parent="Graphics/Text/Links"]
+offset_left = 673.0
+offset_top = 206.0
+offset_right = 833.0
+offset_bottom = 246.0
+theme_override_fonts/font = ExtResource("4_iw8i0")
+text = "Affinity Designer 2"
+uri = "https://affinity.serif.com/en-us/"
 
 [node name="Audio Manager Tool" parent="." instance=ExtResource("5_5pw0v")]
 
