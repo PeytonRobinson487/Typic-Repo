@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjnhkwa8nmm36"]
+
+[ext_resource type="Script" path="res://Scripts/audio_manager_tool.gd" id="1_pstxt"]
+[ext_resource type="AudioStream" uid="uid://dxgssgxh3ndy4" path="res://Assets/Music/Lukrembo - Biscuit (freetouse.com).mp3" id="2_p54u3"]
+[ext_resource type="PackedScene" uid="uid://b5op8tn5ax030" path="res://Scenes/Data.tscn" id="2_s850n"]
+
+[node name="Audio Manager Tool" type="Node2D"]
+script = ExtResource("1_pstxt")
+
+[node name="Background Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_p54u3")
+volume_db = 1.0
+parameters/looping = true
+
+[node name="Sound Control" type="AudioStreamPlayer" parent="."]
+max_polyphony = 3
+
+[node name="Data" parent="." instance=ExtResource("2_s850n")]
