@@ -91,7 +91,6 @@ func _on_reset_settings_pressed() -> void:
 # toggles options in the scores displayed - description found in data.gd
 func _on_score_display_multi_selected(index: int, _selected: bool) -> void:
 	audio_manager_tool.play_sound(2, data.all_data["sound_modifiers"][1])
-	print(_selected)
 	data.all_data["score_modifiers"][index] = !data.all_data["score_modifiers"][index]
 	update_button(index, data.all_data["score_modifiers"], score_display_options)
 
@@ -238,6 +237,13 @@ func update_all_buttons():
 		update_button(i, data.all_data["score_modifiers"], score_display_options)
 	for i in data.text_modifiers.size():
 		update_button(i, data.all_data["text_modifiers"], text_options)
-	_on_sensitivity_item_clicked(data.all_data["sensitivity"], 0, 0)
+	
+	var index: int = 0
+	match data.all_data["sensitivity"]:
+		#0: index = 0
+		2: index = 1
+		4: index = 2
+		8: index = 3
+	_on_sensitivity_item_clicked(index, 0, 0)
 	
 	data.all_data["sound_modifiers"][1] = sound_temp
