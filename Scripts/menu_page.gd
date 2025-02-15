@@ -144,7 +144,7 @@ func custom_input(new_text: String) -> void:
 	for key in CUSTOM_RESPONSE_NORMAL:
 		if (new_text.substr(0, key.length()).to_lower() == key):
 			var value: Array = CUSTOM_RESPONSE_NORMAL.get(key)
-			user_input.placeholder_text = value.pick_random()
+			user_input.placeholder_text = " " + value.pick_random()
 			return
 	
 	# special cases
