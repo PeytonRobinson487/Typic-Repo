@@ -131,8 +131,10 @@ func _on_user_input_text_submitted(new_text: String) -> void:
 		_on_page_list_item_clicked(1, 0, 0)
 	elif (two_letters == "sc"):
 		_on_page_list_item_clicked(2, 0, 0)
-	elif (two_letters == "qu"):
+	elif (two_letters == "cr"):
 		_on_page_list_item_clicked(3, 0, 0)
+	elif (two_letters == "qu"):
+		_on_page_list_item_clicked(4, 0, 0)
 	else:
 		custom_input(new_text)
 
