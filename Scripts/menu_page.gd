@@ -140,6 +140,12 @@ func _on_user_input_text_submitted(new_text: String) -> void:
 func custom_input(new_text: String) -> void:
 	user_input.text = ""
 	
+	# normal cases
+	for key in CUSTOM_RESPONSE_NORMAL:
+		if (new_text.substr(0, key.length()).to_lower() == key):
+			var value: Array = CUSTOM_RESPONSE_NORMAL.get(key)
+			user_input.placeholder_text = value.pick_random()
+	
 	# special cases
 	if (new_text.substr(0, 5) == "TYPIC"):
 		user_input.placeholder_text = "YES. THIS IS TYPIC."
@@ -162,13 +168,6 @@ func custom_input(new_text: String) -> void:
 	else:
 		var responses: Array = ["Unkonwn page.", "What?", "Huh?", "Try again.", "What does that mean?", "Say what?", "???"]
 		user_input.placeholder_text = responses.pick_random()
-	
-	# normal cases
-	for key in CUSTOM_RESPONSE_NORMAL:
-		if (new_text.substr(0, key.length()).to_lower() == key):
-			var value: Array = CUSTOM_RESPONSE_NORMAL.get(key)
-			user_input.placeholder_text = value.pick_random()
-			return
 	
 	user_input.placeholder_text = " " + user_input.placeholder_text
 
